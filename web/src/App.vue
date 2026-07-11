@@ -108,35 +108,23 @@ function uptimeLabel(value) {
           <h1>{{ status.page.name }}</h1>
           <p class="description">{{ status.page.description }}</p>
         </div>
-        <div class="updated">
-          <span>Last updated</span>
-          <strong>{{ formatDate(status.lastUpdated) }}</strong>
+        <div class="header-actions">
+          <span class="current-pill" :class="`tone-${statusTone}`">
+            <span></span>
+            {{ status.overall.label }}
+          </span>
+          <div class="updated">
+            <span>Updated</span>
+            <strong>{{ formatDate(status.lastUpdated) }}</strong>
+          </div>
         </div>
       </header>
-
-      <section class="overall" :class="`tone-${statusTone}`">
-        <div class="pulse" aria-hidden="true"></div>
-        <div>
-          <p>Current status</p>
-          <h2>{{ status.overall.label }}</h2>
-        </div>
-        <dl>
-          <div>
-            <dt>Components</dt>
-            <dd>{{ components.length }}</dd>
-          </div>
-          <div>
-            <dt>Active incidents</dt>
-            <dd>{{ activeIncidents.length }}</dd>
-          </div>
-        </dl>
-      </section>
 
       <section class="timeline-panel">
         <div class="section-heading timeline-heading">
           <div>
             <h2>Past 90 days</h2>
-            <span>Daily component status from static history and incident data</span>
+            <span>Daily status from static history and incidents</span>
           </div>
           <strong>{{ uptimeLabel(lowestUptime) }}</strong>
         </div>
@@ -175,13 +163,20 @@ function uptimeLabel(value) {
         </div>
       </section>
 
-      <section class="content-grid">
-        <div class="components-panel">
-          <div class="section-heading">
-            <h2>Components</h2>
-            <span>{{ status.summary.components.operational }} operational</span>
+      <section v-if="activeIncidents.length" class="active-incidents">
+        <article v-for="incident in activeIncidents" :key="incident.id" class="incident-card active">
+          <div class="incident-meta">
+            <span>{{ incident.status }}</span>
+            <time>{{ formatDate(incident.started_at) }}</time>
           </div>
+          <h3>{{ incident.title }}</h3>
+          <p>{{ incident.summary }}</p>
+        </article>
+      </section>
 
+      <details class="details-panel">
+        <summary>Component details and incident history</summary>
+        <div class="detail-body">
           <section v-for="group in groupedComponents" :key="group.name" class="component-group">
             <h3>{{ group.name }}</h3>
             <article v-for="component in group.items" :key="component.id" class="component-row">
@@ -196,31 +191,8 @@ function uptimeLabel(value) {
               </span>
             </article>
           </section>
-        </div>
 
-        <aside class="incident-panel">
-          <div class="section-heading">
-            <h2>Incidents</h2>
-            <span>{{ incidents.recent?.length ?? 0 }} recent</span>
-          </div>
-
-          <div v-if="activeIncidents.length" class="incident-list active-list">
-            <article v-for="incident in activeIncidents" :key="incident.id" class="incident-card active">
-              <div class="incident-meta">
-                <span>{{ incident.status }}</span>
-                <time>{{ formatDate(incident.started_at) }}</time>
-              </div>
-              <h3>{{ incident.title }}</h3>
-              <p>{{ incident.summary }}</p>
-            </article>
-          </div>
-
-          <div v-else class="empty-state">
-            <h3>No active incidents</h3>
-            <p>Everything currently reported by the static API is healthy.</p>
-          </div>
-
-          <div class="incident-list">
+          <div v-if="recentResolved.length" class="incident-list">
             <article v-for="incident in recentResolved" :key="incident.id" class="incident-card">
               <div class="incident-meta">
                 <span>{{ incident.status }}</span>
@@ -230,8 +202,8 @@ function uptimeLabel(value) {
               <p>{{ incident.summary }}</p>
             </article>
           </div>
-        </aside>
-      </section>
+        </div>
+      </details>
     </section>
 
     <section v-else-if="loading" class="loading-state">
