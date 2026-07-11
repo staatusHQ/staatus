@@ -23,7 +23,11 @@
       "properties": {
         "timezone": { "type": "string" },
         "history_window": { "type": "string" },
-        "default_check_tick": { "type": "string" }
+        "default_check_tick": { "type": "string" },
+        "missing_history": {
+          "type": "string",
+          "enum": ["operational", "unknown"]
+        }
       }
     },
     "components": {

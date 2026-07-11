@@ -6,6 +6,8 @@ settings:
   timezone: UTC
   history_window: 90d
   default_check_tick: 5m
+  # Use "operational" for friendly starter pages, or "unknown" to show neutral gaps.
+  missing_history: operational
 components:
   - id: edge-api
     name: Edge API

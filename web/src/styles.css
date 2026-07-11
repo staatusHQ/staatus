@@ -163,6 +163,11 @@ h1 {
   --tone-soft: rgba(63, 111, 181, 0.15);
 }
 
+.tone-neutral {
+  --tone: #b9c0ca;
+  --tone-soft: rgba(185, 192, 202, 0.18);
+}
+
 .content-grid {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(320px, 0.65fr);

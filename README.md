@@ -19,6 +19,8 @@ Staatus can validate a YAML config, read incident/history data from the repo, re
 
 The rendered component API includes a 90-day daily timeline per component, so the public page can show reliability history without making runtime API calls.
 
+For new projects, `settings.missing_history: operational` fills days without check history as green operational days. Teams that prefer stricter reporting can set `settings.missing_history: unknown` to show missing days as neutral instead.
+
 ## CLI
 
 Run the CLI from the repository root:

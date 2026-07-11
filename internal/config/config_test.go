@@ -17,6 +17,9 @@ func TestLoadValidConfig(t *testing.T) {
 	if cfg.CheckCount() != 3 {
 		t.Fatalf("check count = %d", cfg.CheckCount())
 	}
+	if cfg.Settings.MissingHistory != "operational" {
+		t.Fatalf("missing history = %q", cfg.Settings.MissingHistory)
+	}
 }
 
 func TestLoadRejectsDuplicateComponentIDs(t *testing.T) {
@@ -29,6 +32,30 @@ components:
     name: API
   - id: api
     name: API Copy
+`)
+	if err := os.WriteFile(path, body, 0o644); err != nil {
+		t.Fatal(err)
+	}
+
+	_, err := Load(path)
+	if err == nil {
+		t.Fatal("Load() error = nil, want validation error")
+	}
+	if !IsValidationError(err) {
+		t.Fatalf("Load() error = %T, want ValidationError", err)
+	}
+}
+
+func TestLoadRejectsInvalidMissingHistoryMode(t *testing.T) {
+	dir := t.TempDir()
+	path := filepath.Join(dir, "staatus.yml")
+	body := []byte(`page:
+  name: Test
+settings:
+  missing_history: optimistic
+components:
+  - id: api
+    name: API
 `)
 	if err := os.WriteFile(path, body, 0o644); err != nil {
 		t.Fatal(err)

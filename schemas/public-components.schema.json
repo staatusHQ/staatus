@@ -19,7 +19,7 @@
           "group": { "type": "string" },
           "status": { "type": "string" },
           "statusLabel": { "type": "string" },
-          "uptime90d": { "type": "number" },
+          "uptime90d": { "type": ["number", "null"] },
           "check": { "type": "object" },
           "links": { "type": "array" },
           "tags": { "type": "array" },
@@ -33,9 +33,12 @@
               "required": ["date", "status", "statusLabel", "uptime"],
               "properties": {
                 "date": { "type": "string", "format": "date" },
-                "status": { "type": "string" },
+                "status": {
+                  "type": "string",
+                  "enum": ["operational", "degraded", "partial_outage", "major_outage", "maintenance", "unknown"]
+                },
                 "statusLabel": { "type": "string" },
-                "uptime": { "type": "number" }
+                "uptime": { "type": ["number", "null"] }
               }
             }
           }

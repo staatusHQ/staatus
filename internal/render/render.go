@@ -60,7 +60,7 @@ type PublicComponent struct {
 	Group       string          `json:"group,omitempty"`
 	Status      string          `json:"status"`
 	StatusLabel string          `json:"statusLabel"`
-	Uptime90d   float64         `json:"uptime90d"`
+	Uptime90d   *float64        `json:"uptime90d"`
 	Check       *PublicCheck    `json:"check,omitempty"`
 	Links       []config.Link   `json:"links,omitempty"`
 	Tags        []string        `json:"tags,omitempty"`
@@ -76,10 +76,10 @@ type PublicCheck struct {
 }
 
 type TimelineDay struct {
-	Date        string  `json:"date"`
-	Status      string  `json:"status"`
-	StatusLabel string  `json:"statusLabel"`
-	Uptime      float64 `json:"uptime"`
+	Date        string   `json:"date"`
+	Status      string   `json:"status"`
+	StatusLabel string   `json:"statusLabel"`
+	Uptime      *float64 `json:"uptime"`
 }
 
 type IncidentsDocument struct {
@@ -113,7 +113,7 @@ func Render(options Options) (*Manifest, error) {
 		return nil, err
 	}
 
-	components := publicComponents(options.Config.Components, loadedIncidents, loadedHistory, now)
+	components := publicComponents(options.Config, loadedIncidents, loadedHistory, now)
 	statusDoc := StatusDocument{
 		SchemaVersion: schemaVersion,
 		GeneratedAt:   now.Format(time.RFC3339),
@@ -166,10 +166,10 @@ func Render(options Options) (*Manifest, error) {
 	return manifest, nil
 }
 
-func publicComponents(components []config.Component, allIncidents []incidents.Incident, series history.Series, now time.Time) []PublicComponent {
+func publicComponents(cfg *config.Config, allIncidents []incidents.Incident, series history.Series, now time.Time) []PublicComponent {
 	active := incidents.Active(allIncidents)
-	public := make([]PublicComponent, 0, len(components))
-	for _, component := range components {
+	public := make([]PublicComponent, 0, len(cfg.Components))
+	for _, component := range cfg.Components {
 		status := component.Status
 		for _, incident := range active {
 			if slices.Contains(incident.Components, component.ID) {
@@ -177,6 +177,7 @@ func publicComponents(components []config.Component, allIncidents []incidents.In
 				break
 			}
 		}
+		timeline := timelineFor(component.ID, allIncidents, series, now, cfg.Settings.MissingHistory)
 		publicComponent := PublicComponent{
 			ID:          component.ID,
 			Name:        component.Name,
@@ -184,11 +185,11 @@ func publicComponents(components []config.Component, allIncidents []incidents.In
 			Group:       component.Group,
 			Status:      status,
 			StatusLabel: labelForStatus(status),
-			Uptime90d:   uptime90d(component.ID, allIncidents, series, now),
+			Uptime90d:   uptime90d(timeline),
 			Links:       component.Links,
 			Tags:        component.Tags,
 			History:     series[component.ID],
-			Timeline:    timelineFor(component.ID, allIncidents, series, now),
+			Timeline:    timeline,
 		}
 		if component.Check != nil {
 			publicComponent.Check = &PublicCheck{
@@ -203,7 +204,7 @@ func publicComponents(components []config.Component, allIncidents []incidents.In
 	return public
 }
 
-func timelineFor(componentID string, allIncidents []incidents.Incident, series history.Series, now time.Time) []TimelineDay {
+func timelineFor(componentID string, allIncidents []incidents.Incident, series history.Series, now time.Time, missingHistory string) []TimelineDay {
 	start := dayStart(now.UTC()).AddDate(0, 0, -89)
 	pointsByDay := map[string]history.Point{}
 	for _, point := range series[componentID] {
@@ -218,13 +219,13 @@ func timelineFor(componentID string, allIncidents []incidents.Incident, series h
 	for offset := 0; offset < 90; offset++ {
 		day := start.AddDate(0, 0, offset)
 		key := day.Format(time.DateOnly)
-		status := "operational"
-		uptime := 100.0
+		status := missingHistory
+		uptime := uptimeForStatus(status)
 
 		if point, ok := pointsByDay[key]; ok {
 			status = normalizeHistoryStatus(point.Status)
 			if point.Uptime > 0 {
-				uptime = point.Uptime
+				uptime = floatPtr(point.Uptime)
 			}
 		}
 		if incidentStatus := incidentStatusForDay(componentID, day, allIncidents, now); incidentStatus != "" {
@@ -242,16 +243,23 @@ func timelineFor(componentID string, allIncidents []incidents.Incident, series h
 	return days
 }
 
-func uptime90d(componentID string, allIncidents []incidents.Incident, series history.Series, now time.Time) float64 {
-	timeline := timelineFor(componentID, allIncidents, series, now)
+func uptime90d(timeline []TimelineDay) *float64 {
 	if len(timeline) == 0 {
-		return 100
+		return floatPtr(100)
 	}
 	total := 0.0
+	count := 0
 	for _, day := range timeline {
-		total += day.Uptime
+		if day.Uptime == nil {
+			continue
+		}
+		total += *day.Uptime
+		count++
 	}
-	return round2(total / float64(len(timeline)))
+	if count == 0 {
+		return nil
+	}
+	return floatPtr(round2(total / float64(count)))
 }
 
 func incidentStatusForDay(componentID string, day time.Time, allIncidents []incidents.Incident, now time.Time) string {
@@ -360,6 +368,8 @@ func labelForStatus(status string) string {
 		return "Major outage"
 	case "maintenance":
 		return "Maintenance"
+	case "unknown":
+		return "No data"
 	default:
 		return status
 	}
@@ -378,18 +388,20 @@ func normalizeHistoryStatus(status string) string {
 	}
 }
 
-func uptimeForStatus(status string) float64 {
+func uptimeForStatus(status string) *float64 {
 	switch status {
 	case "major_outage":
-		return 0
+		return floatPtr(0)
 	case "partial_outage":
-		return 75
+		return floatPtr(75)
 	case "degraded":
-		return 98.5
+		return floatPtr(98.5)
 	case "maintenance":
-		return 99
+		return floatPtr(99)
+	case "unknown":
+		return nil
 	default:
-		return 100
+		return floatPtr(100)
 	}
 }
 
@@ -408,6 +420,10 @@ func dayStart(value time.Time) time.Time {
 
 func round2(value float64) float64 {
 	return float64(int(value*100+0.5)) / 100
+}
+
+func floatPtr(value float64) *float64 {
+	return &value
 }
 
 func writeJSON(path string, doc any) error {

@@ -32,6 +32,7 @@ type Settings struct {
 	Timezone         string `yaml:"timezone" json:"timezone,omitempty"`
 	HistoryWindow    string `yaml:"history_window" json:"history_window,omitempty"`
 	DefaultCheckTick string `yaml:"default_check_tick" json:"default_check_tick,omitempty"`
+	MissingHistory   string `yaml:"missing_history" json:"missing_history,omitempty"`
 }
 
 type Component struct {
@@ -109,6 +110,9 @@ func (c *Config) Validate() error {
 	if len(c.Components) == 0 {
 		messages = append(messages, "at least one component is required")
 	}
+	if !slices.Contains(MissingHistoryModes(), c.Settings.MissingHistory) {
+		messages = append(messages, "settings.missing_history must be one of %s", strings.Join(MissingHistoryModes(), ", "))
+	}
 
 	seenIDs := map[string]bool{}
 	for i, component := range c.Components {
@@ -156,6 +160,9 @@ func (c *Config) applyDefaults() {
 	if c.Settings.DefaultCheckTick == "" {
 		c.Settings.DefaultCheckTick = "5m"
 	}
+	if c.Settings.MissingHistory == "" {
+		c.Settings.MissingHistory = "operational"
+	}
 	for i := range c.Components {
 		if c.Components[i].Status == "" {
 			c.Components[i].Status = "operational"
@@ -176,6 +183,10 @@ func (c *Config) applyDefaults() {
 
 func ComponentStatuses() []string {
 	return []string{"operational", "degraded", "partial_outage", "major_outage", "maintenance"}
+}
+
+func MissingHistoryModes() []string {
+	return []string{"operational", "unknown"}
 }
 
 func validateCheck(prefix string, check Check) []string {

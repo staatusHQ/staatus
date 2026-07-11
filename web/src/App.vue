@@ -30,6 +30,14 @@ const timelineComponents = computed(() =>
   })),
 )
 
+const lowestUptime = computed(() => {
+  const values = timelineComponents.value
+    .map((component) => component.uptime90d)
+    .filter((value) => typeof value === 'number')
+  if (!values.length) return null
+  return Math.min(...values)
+})
+
 onMounted(async () => {
   try {
     const [statusResponse, componentsResponse, incidentsResponse] = await Promise.all([
@@ -65,6 +73,7 @@ function toneFor(value) {
     partial_outage: 'bad',
     major_outage: 'bad',
     maintenance: 'info',
+    unknown: 'neutral',
   }[value] ?? 'info'
 }
 
@@ -85,7 +94,7 @@ function formatDay(value) {
 }
 
 function uptimeLabel(value) {
-  if (typeof value !== 'number') return '100%'
+  if (typeof value !== 'number') return 'No history'
   return `${value.toFixed(value >= 99.995 ? 0 : 2)}%`
 }
 </script>
@@ -129,7 +138,7 @@ function uptimeLabel(value) {
             <h2>Past 90 days</h2>
             <span>Daily component status from static history and incident data</span>
           </div>
-          <strong>{{ uptimeLabel(Math.min(...timelineComponents.map((component) => component.uptime90d ?? 100))) }}</strong>
+          <strong>{{ uptimeLabel(lowestUptime) }}</strong>
         </div>
 
         <div class="timeline-list">
@@ -160,6 +169,7 @@ function uptimeLabel(value) {
             <span><i class="tone-ok"></i> Operational</span>
             <span><i class="tone-warn"></i> Degraded</span>
             <span><i class="tone-bad"></i> Outage</span>
+            <span><i class="tone-neutral"></i> No data</span>
           </div>
           <span>Today</span>
         </div>

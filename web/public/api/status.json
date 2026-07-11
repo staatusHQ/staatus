@@ -1,6 +1,6 @@
 {
   "schemaVersion": "staatus.public.v1",
-  "generatedAt": "2026-07-11T11:32:09Z",
+  "generatedAt": "2026-07-11T11:35:40Z",
   "page": {
     "name": "Staatus Cloud",
     "description": "Reference status page for the Staatus v0 sample project.",
@@ -23,7 +23,7 @@
       "resolved": 1
     }
   },
-  "lastUpdated": "2026-07-11T11:32:09Z",
+  "lastUpdated": "2026-07-11T11:35:40Z",
   "history": {
     "dashboard": [
       {

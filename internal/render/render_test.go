@@ -35,8 +35,24 @@ func TestRenderWritesPublicAPIFiles(t *testing.T) {
 		}
 	}
 
-	components := publicComponents(cfg.Components, nil, nil, time.Date(2026, 7, 11, 0, 0, 0, 0, time.UTC))
+	components := publicComponents(cfg, nil, nil, time.Date(2026, 7, 11, 0, 0, 0, 0, time.UTC))
 	if got := len(components[0].Timeline); got != 90 {
 		t.Fatalf("timeline days = %d, want 90", got)
+	}
+}
+
+func TestRenderCanMarkMissingHistoryUnknown(t *testing.T) {
+	cfg, err := config.Load(filepath.Join("..", "..", "staatus.yml"))
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+	cfg.Settings.MissingHistory = "unknown"
+
+	components := publicComponents(cfg, nil, nil, time.Date(2026, 7, 11, 0, 0, 0, 0, time.UTC))
+	if got := components[0].Timeline[0].Status; got != "unknown" {
+		t.Fatalf("missing day status = %q, want unknown", got)
+	}
+	if components[0].Timeline[0].Uptime != nil {
+		t.Fatalf("missing day uptime = %v, want nil", *components[0].Timeline[0].Uptime)
 	}
 }
