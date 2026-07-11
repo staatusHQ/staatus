@@ -38,7 +38,20 @@
                   "enum": ["operational", "degraded", "partial_outage", "major_outage", "maintenance", "unknown"]
                 },
                 "statusLabel": { "type": "string" },
-                "uptime": { "type": ["number", "null"] }
+                "uptime": { "type": ["number", "null"] },
+                "incidents": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": ["id", "title", "status", "impact"],
+                    "properties": {
+                      "id": { "type": "string" },
+                      "title": { "type": "string" },
+                      "status": { "type": "string" },
+                      "impact": { "type": "string" }
+                    }
+                  }
+                }
               }
             }
           }

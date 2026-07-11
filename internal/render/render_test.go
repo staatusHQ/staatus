@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/staatusHQ/staatus/internal/config"
+	"github.com/staatusHQ/staatus/internal/incidents"
 )
 
 func TestRenderWritesPublicAPIFiles(t *testing.T) {
@@ -54,5 +55,42 @@ func TestRenderCanMarkMissingHistoryUnknown(t *testing.T) {
 	}
 	if components[0].Timeline[0].Uptime != nil {
 		t.Fatalf("missing day uptime = %v, want nil", *components[0].Timeline[0].Uptime)
+	}
+}
+
+func TestRenderAddsIncidentMetadataToTimelineDays(t *testing.T) {
+	cfg, err := config.Load(filepath.Join("..", "..", "staatus.yml"))
+	if err != nil {
+		t.Fatalf("Load() error = %v", err)
+	}
+	allIncidents, err := incidents.LoadDir(filepath.Join("..", "..", "data"))
+	if err != nil {
+		t.Fatalf("LoadDir() error = %v", err)
+	}
+
+	components := publicComponents(cfg, allIncidents, nil, time.Date(2026, 7, 11, 0, 0, 0, 0, time.UTC))
+	var webhook PublicComponent
+	for _, component := range components {
+		if component.ID == "webhooks" {
+			webhook = component
+			break
+		}
+	}
+	if webhook.ID == "" {
+		t.Fatal("webhooks component not found")
+	}
+
+	var incidentDay TimelineDay
+	for _, day := range webhook.Timeline {
+		if day.Date == "2026-07-10" {
+			incidentDay = day
+			break
+		}
+	}
+	if got := len(incidentDay.Incidents); got != 1 {
+		t.Fatalf("timeline incidents = %d, want 1", got)
+	}
+	if got := incidentDay.Incidents[0].ID; got != "inc-2026-07-10-webhooks-delay" {
+		t.Fatalf("timeline incident id = %q", got)
 	}
 }

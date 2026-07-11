@@ -6,6 +6,7 @@ const components = ref([])
 const incidents = ref({ active: [], recent: [] })
 const loading = ref(true)
 const error = ref('')
+const activeDayKey = ref('')
 
 const statusTone = computed(() => toneFor(status.value?.overall?.status))
 const activeIncidents = computed(() => incidents.value.active ?? [])
@@ -103,6 +104,35 @@ function uptimeLabel(value) {
   return `${value.toFixed(value >= 99.995 ? 0 : 2)}%`
 }
 
+function dayKey(component, day) {
+  return `${component.id}-${day.date}`
+}
+
+function dayAriaLabel(component, day) {
+  const incidentText = day.incidents?.length
+    ? `${day.incidents.length} related incident${day.incidents.length === 1 ? '' : 's'}`
+    : 'no incidents recorded'
+  return `${component.name}, ${formatDay(day.date)}: ${day.statusLabel}, ${incidentText}`
+}
+
+function dayTitle(component, day) {
+  return `${component.name} · ${formatDay(day.date)} · ${day.statusLabel} · ${dayIncidentSummary(day)}`
+}
+
+function dayIncidentSummary(day) {
+  if (!day.incidents?.length) return 'No incidents recorded'
+  if (day.incidents.length === 1) return day.incidents[0].title
+  return `${day.incidents.length} related incidents`
+}
+
+function handleDayClick(day) {
+  const incidentID = day.incidents?.[0]?.id
+  if (!incidentID) return
+
+  const target = document.getElementById(`incident-${incidentID}`)
+  target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+}
+
 function statusGlyph(value) {
   if (value === 'operational') return ''
   if (value === 'maintenance') return 'i'
@@ -163,13 +193,33 @@ function statusMessage(value) {
               <strong>{{ uptimeLabel(component.uptime90d) }} uptime</strong>
             </div>
             <div class="day-strip" :aria-label="`${component.name} 90 day history`">
-              <span
+              <button
                 v-for="day in component.timeline"
                 :key="`${component.id}-${day.date}`"
+                type="button"
                 class="day-cell"
-                :class="`tone-${toneFor(day.status)}`"
-                :title="`${formatDay(day.date)}: ${day.statusLabel}`"
-              ></span>
+                :class="[
+                  `tone-${toneFor(day.status)}`,
+                  {
+                    clickable: day.incidents?.length,
+                    'show-popover': activeDayKey === dayKey(component, day),
+                  },
+                ]"
+                :aria-label="dayAriaLabel(component, day)"
+                :title="dayTitle(component, day)"
+                :tabindex="day.incidents?.length ? 0 : -1"
+                @focus="activeDayKey = dayKey(component, day)"
+                @blur="activeDayKey = ''"
+                @mouseover="activeDayKey = dayKey(component, day)"
+                @mouseout="activeDayKey = ''"
+                @click="handleDayClick(day)"
+              >
+                <span class="day-popover" role="tooltip">
+                  <strong>{{ formatDay(day.date) }}</strong>
+                  <span>{{ day.statusLabel }}</span>
+                  <em>{{ dayIncidentSummary(day) }}</em>
+                </span>
+              </button>
             </div>
           </article>
         </div>
@@ -188,7 +238,12 @@ function statusMessage(value) {
 
       <section v-if="activeIncidents.length" class="active-incidents">
         <h2>Active incidents</h2>
-        <article v-for="incident in activeIncidents" :key="incident.id" class="incident-card active">
+        <article
+          v-for="incident in activeIncidents"
+          :id="`incident-${incident.id}`"
+          :key="incident.id"
+          class="incident-card active"
+        >
           <div class="incident-meta">
             <span>{{ incident.status }}</span>
             <time>{{ formatDate(incident.started_at) }}</time>
@@ -201,7 +256,12 @@ function statusMessage(value) {
       <section v-if="recentResolved.length" class="past-incidents">
         <h2>Previous incidents</h2>
         <div class="incident-list">
-          <article v-for="incident in recentResolved" :key="incident.id" class="incident-card">
+          <article
+            v-for="incident in recentResolved"
+            :id="`incident-${incident.id}`"
+            :key="incident.id"
+            class="incident-card"
+          >
             <div class="incident-meta">
               <span>{{ incident.status }}</span>
               <time>{{ formatDate(incident.resolved_at || incident.started_at) }}</time>

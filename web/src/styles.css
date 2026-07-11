@@ -166,7 +166,7 @@ h1 {
 }
 
 .timeline-panel {
-  overflow: hidden;
+  overflow: visible;
   border: 1px solid #dfe4ea;
   border-radius: 8px;
   background: #ffffff;
@@ -261,9 +261,87 @@ h1 {
 }
 
 .day-cell {
+  position: relative;
   min-width: 3px;
+  min-height: 34px;
+  padding: 0;
+  border: 0;
   border-radius: 3px;
   background: var(--tone);
+  cursor: default;
+}
+
+.day-cell.clickable {
+  cursor: pointer;
+}
+
+.day-cell:focus-visible {
+  outline: 2px solid #20242c;
+  outline-offset: 2px;
+  z-index: 5;
+}
+
+.day-popover {
+  position: absolute;
+  bottom: calc(100% + 10px);
+  left: 50%;
+  z-index: 20;
+  display: none;
+  width: max-content;
+  max-width: 260px;
+  padding: 10px 12px;
+  border: 1px solid #dfe4ea;
+  border-radius: 8px;
+  color: #20242c;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(30, 36, 48, 0.16);
+  text-align: left;
+  transform: translateX(-50%);
+}
+
+.day-popover::after {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  width: 10px;
+  height: 10px;
+  border-right: 1px solid #dfe4ea;
+  border-bottom: 1px solid #dfe4ea;
+  background: #ffffff;
+  content: "";
+  transform: translate(-50%, -5px) rotate(45deg);
+}
+
+.day-popover strong,
+.day-popover span,
+.day-popover em {
+  display: block;
+}
+
+.day-popover strong {
+  margin-bottom: 4px;
+  font-size: 0.9rem;
+}
+
+.day-popover span {
+  color: var(--tone);
+  font-size: 0.82rem;
+  font-weight: 800;
+}
+
+.day-popover em {
+  margin-top: 6px;
+  color: #687283;
+  font-size: 0.82rem;
+  font-style: normal;
+  line-height: 1.35;
+}
+
+.day-cell:hover .day-popover,
+.day-cell:focus .day-popover,
+.day-cell:focus-visible .day-popover,
+.day-cell.show-popover .day-popover {
+  display: block;
 }
 
 .timeline-footer {
@@ -321,6 +399,7 @@ h1 {
 }
 
 .incident-card {
+  scroll-margin-top: 24px;
   padding: 16px;
   border: 1px solid #e2e6ed;
   border-radius: 8px;
@@ -398,7 +477,8 @@ h1 {
   }
 
   .day-strip {
-    gap: 2px;
+    grid-template-columns: repeat(90, minmax(2px, 1fr));
+    gap: 1px;
   }
 
   .legend {

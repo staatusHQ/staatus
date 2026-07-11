@@ -76,10 +76,18 @@ type PublicCheck struct {
 }
 
 type TimelineDay struct {
-	Date        string   `json:"date"`
-	Status      string   `json:"status"`
-	StatusLabel string   `json:"statusLabel"`
-	Uptime      *float64 `json:"uptime"`
+	Date        string             `json:"date"`
+	Status      string             `json:"status"`
+	StatusLabel string             `json:"statusLabel"`
+	Uptime      *float64           `json:"uptime"`
+	Incidents   []TimelineIncident `json:"incidents,omitempty"`
+}
+
+type TimelineIncident struct {
+	ID     string `json:"id"`
+	Title  string `json:"title"`
+	Status string `json:"status"`
+	Impact string `json:"impact"`
 }
 
 type IncidentsDocument struct {
@@ -228,7 +236,8 @@ func timelineFor(componentID string, allIncidents []incidents.Incident, series h
 				uptime = floatPtr(point.Uptime)
 			}
 		}
-		if incidentStatus := incidentStatusForDay(componentID, day, allIncidents, now); incidentStatus != "" {
+		dayIncidents := incidentsForDay(componentID, day, allIncidents, now)
+		if incidentStatus := highestIncidentStatus(dayIncidents); incidentStatus != "" {
 			status = incidentStatus
 			uptime = uptimeForStatus(status)
 		}
@@ -238,6 +247,7 @@ func timelineFor(componentID string, allIncidents []incidents.Incident, series h
 			Status:      status,
 			StatusLabel: labelForStatus(status),
 			Uptime:      uptime,
+			Incidents:   dayIncidents,
 		})
 	}
 	return days
@@ -262,10 +272,10 @@ func uptime90d(timeline []TimelineDay) *float64 {
 	return floatPtr(round2(total / float64(count)))
 }
 
-func incidentStatusForDay(componentID string, day time.Time, allIncidents []incidents.Incident, now time.Time) string {
+func incidentsForDay(componentID string, day time.Time, allIncidents []incidents.Incident, now time.Time) []TimelineIncident {
 	dayStart := dayStart(day)
 	dayEnd := dayStart.AddDate(0, 0, 1)
-	status := ""
+	var matches []TimelineIncident
 	for _, incident := range allIncidents {
 		if !slices.Contains(incident.Components, componentID) {
 			continue
@@ -283,10 +293,23 @@ func incidentStatusForDay(componentID string, day time.Time, allIncidents []inci
 			resolved = parsed
 		}
 		if started.Before(dayEnd) && resolved.After(dayStart) {
-			candidate := statusForImpact(incident.Impact)
-			if statusRank(candidate) > statusRank(status) {
-				status = candidate
-			}
+			matches = append(matches, TimelineIncident{
+				ID:     incident.ID,
+				Title:  incident.Title,
+				Status: incident.Status,
+				Impact: incident.Impact,
+			})
+		}
+	}
+	return matches
+}
+
+func highestIncidentStatus(dayIncidents []TimelineIncident) string {
+	status := ""
+	for _, incident := range dayIncidents {
+		candidate := statusForImpact(incident.Impact)
+		if statusRank(candidate) > statusRank(status) {
+			status = candidate
 		}
 	}
 	return status

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "staatus.public.v1",
-  "generatedAt": "2026-07-11T11:43:53Z",
+  "generatedAt": "2026-07-11T11:58:01Z",
   "components": [
     {
       "id": "edge-api",
@@ -1117,7 +1117,15 @@
           "date": "2026-07-02",
           "status": "degraded",
           "statusLabel": "Degraded performance",
-          "uptime": 98.5
+          "uptime": 98.5,
+          "incidents": [
+            {
+              "id": "inc-2026-07-02-dashboard-errors",
+              "title": "Dashboard sign-in errors",
+              "status": "resolved",
+              "impact": "minor"
+            }
+          ]
         },
         {
           "date": "2026-07-03",
@@ -1749,13 +1757,29 @@
           "date": "2026-07-10",
           "status": "degraded",
           "statusLabel": "Degraded performance",
-          "uptime": 98.5
+          "uptime": 98.5,
+          "incidents": [
+            {
+              "id": "inc-2026-07-10-webhooks-delay",
+              "title": "Webhook delivery delays",
+              "status": "monitoring",
+              "impact": "degraded"
+            }
+          ]
         },
         {
           "date": "2026-07-11",
           "status": "degraded",
           "statusLabel": "Degraded performance",
-          "uptime": 98.5
+          "uptime": 98.5,
+          "incidents": [
+            {
+              "id": "inc-2026-07-10-webhooks-delay",
+              "title": "Webhook delivery delays",
+              "status": "monitoring",
+              "impact": "degraded"
+            }
+          ]
         }
       ]
     },
