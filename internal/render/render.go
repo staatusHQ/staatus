@@ -60,10 +60,12 @@ type PublicComponent struct {
 	Group       string          `json:"group,omitempty"`
 	Status      string          `json:"status"`
 	StatusLabel string          `json:"statusLabel"`
+	Uptime90d   float64         `json:"uptime90d"`
 	Check       *PublicCheck    `json:"check,omitempty"`
 	Links       []config.Link   `json:"links,omitempty"`
 	Tags        []string        `json:"tags,omitempty"`
 	History     []history.Point `json:"history,omitempty"`
+	Timeline    []TimelineDay   `json:"timeline"`
 }
 
 type PublicCheck struct {
@@ -71,6 +73,13 @@ type PublicCheck struct {
 	URL            string `json:"url"`
 	Method         string `json:"method"`
 	ExpectedStatus int    `json:"expectedStatus"`
+}
+
+type TimelineDay struct {
+	Date        string  `json:"date"`
+	Status      string  `json:"status"`
+	StatusLabel string  `json:"statusLabel"`
+	Uptime      float64 `json:"uptime"`
 }
 
 type IncidentsDocument struct {
@@ -104,7 +113,7 @@ func Render(options Options) (*Manifest, error) {
 		return nil, err
 	}
 
-	components := publicComponents(options.Config.Components, loadedIncidents, loadedHistory)
+	components := publicComponents(options.Config.Components, loadedIncidents, loadedHistory, now)
 	statusDoc := StatusDocument{
 		SchemaVersion: schemaVersion,
 		GeneratedAt:   now.Format(time.RFC3339),
@@ -157,7 +166,7 @@ func Render(options Options) (*Manifest, error) {
 	return manifest, nil
 }
 
-func publicComponents(components []config.Component, allIncidents []incidents.Incident, series history.Series) []PublicComponent {
+func publicComponents(components []config.Component, allIncidents []incidents.Incident, series history.Series, now time.Time) []PublicComponent {
 	active := incidents.Active(allIncidents)
 	public := make([]PublicComponent, 0, len(components))
 	for _, component := range components {
@@ -175,9 +184,11 @@ func publicComponents(components []config.Component, allIncidents []incidents.In
 			Group:       component.Group,
 			Status:      status,
 			StatusLabel: labelForStatus(status),
+			Uptime90d:   uptime90d(component.ID, allIncidents, series, now),
 			Links:       component.Links,
 			Tags:        component.Tags,
 			History:     series[component.ID],
+			Timeline:    timelineFor(component.ID, allIncidents, series, now),
 		}
 		if component.Check != nil {
 			publicComponent.Check = &PublicCheck{
@@ -192,17 +203,91 @@ func publicComponents(components []config.Component, allIncidents []incidents.In
 	return public
 }
 
-func overallStatus(components []PublicComponent) OverallStatus {
-	rank := map[string]int{
-		"operational":    0,
-		"maintenance":    1,
-		"degraded":       2,
-		"partial_outage": 3,
-		"major_outage":   4,
+func timelineFor(componentID string, allIncidents []incidents.Incident, series history.Series, now time.Time) []TimelineDay {
+	start := dayStart(now.UTC()).AddDate(0, 0, -89)
+	pointsByDay := map[string]history.Point{}
+	for _, point := range series[componentID] {
+		day := dayString(point.CheckedAt)
+		if day == "" {
+			continue
+		}
+		pointsByDay[day] = point
 	}
+
+	days := make([]TimelineDay, 0, 90)
+	for offset := 0; offset < 90; offset++ {
+		day := start.AddDate(0, 0, offset)
+		key := day.Format(time.DateOnly)
+		status := "operational"
+		uptime := 100.0
+
+		if point, ok := pointsByDay[key]; ok {
+			status = normalizeHistoryStatus(point.Status)
+			if point.Uptime > 0 {
+				uptime = point.Uptime
+			}
+		}
+		if incidentStatus := incidentStatusForDay(componentID, day, allIncidents, now); incidentStatus != "" {
+			status = incidentStatus
+			uptime = uptimeForStatus(status)
+		}
+
+		days = append(days, TimelineDay{
+			Date:        key,
+			Status:      status,
+			StatusLabel: labelForStatus(status),
+			Uptime:      uptime,
+		})
+	}
+	return days
+}
+
+func uptime90d(componentID string, allIncidents []incidents.Incident, series history.Series, now time.Time) float64 {
+	timeline := timelineFor(componentID, allIncidents, series, now)
+	if len(timeline) == 0 {
+		return 100
+	}
+	total := 0.0
+	for _, day := range timeline {
+		total += day.Uptime
+	}
+	return round2(total / float64(len(timeline)))
+}
+
+func incidentStatusForDay(componentID string, day time.Time, allIncidents []incidents.Incident, now time.Time) string {
+	dayStart := dayStart(day)
+	dayEnd := dayStart.AddDate(0, 0, 1)
+	status := ""
+	for _, incident := range allIncidents {
+		if !slices.Contains(incident.Components, componentID) {
+			continue
+		}
+		started, err := time.Parse(time.RFC3339, incident.StartedAt)
+		if err != nil {
+			continue
+		}
+		resolved := now
+		if incident.ResolvedAt != "" {
+			parsed, err := time.Parse(time.RFC3339, incident.ResolvedAt)
+			if err != nil {
+				continue
+			}
+			resolved = parsed
+		}
+		if started.Before(dayEnd) && resolved.After(dayStart) {
+			candidate := statusForImpact(incident.Impact)
+			if statusRank(candidate) > statusRank(status) {
+				status = candidate
+			}
+		}
+	}
+	return status
+}
+
+func overallStatus(components []PublicComponent) OverallStatus {
 	status := "operational"
 	for _, component := range components {
-		if rank[component.Status] > rank[status] {
+		if statusRank(component.Status) > statusRank(status) {
 			status = component.Status
 		}
 	}
@@ -248,6 +333,21 @@ func statusForImpact(impact string) string {
 	}
 }
 
+func statusRank(status string) int {
+	switch status {
+	case "maintenance":
+		return 1
+	case "degraded":
+		return 2
+	case "partial_outage":
+		return 3
+	case "major_outage":
+		return 4
+	default:
+		return 0
+	}
+}
+
 func labelForStatus(status string) string {
 	switch status {
 	case "operational":
@@ -263,6 +363,51 @@ func labelForStatus(status string) string {
 	default:
 		return status
 	}
+}
+
+func normalizeHistoryStatus(status string) string {
+	switch status {
+	case "up":
+		return "operational"
+	case "down":
+		return "major_outage"
+	case "operational", "degraded", "partial_outage", "major_outage", "maintenance":
+		return status
+	default:
+		return "operational"
+	}
+}
+
+func uptimeForStatus(status string) float64 {
+	switch status {
+	case "major_outage":
+		return 0
+	case "partial_outage":
+		return 75
+	case "degraded":
+		return 98.5
+	case "maintenance":
+		return 99
+	default:
+		return 100
+	}
+}
+
+func dayString(value string) string {
+	parsed, err := time.Parse(time.RFC3339, value)
+	if err != nil {
+		return ""
+	}
+	return parsed.UTC().Format(time.DateOnly)
+}
+
+func dayStart(value time.Time) time.Time {
+	year, month, day := value.UTC().Date()
+	return time.Date(year, month, day, 0, 0, 0, 0, time.UTC)
+}
+
+func round2(value float64) float64 {
+	return float64(int(value*100+0.5)) / 100
 }
 
 func writeJSON(path string, doc any) error {

@@ -11,7 +11,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "status", "statusLabel"],
+        "required": ["id", "name", "status", "statusLabel", "uptime90d", "timeline"],
         "properties": {
           "id": { "type": "string" },
           "name": { "type": "string" },
@@ -19,10 +19,26 @@
           "group": { "type": "string" },
           "status": { "type": "string" },
           "statusLabel": { "type": "string" },
+          "uptime90d": { "type": "number" },
           "check": { "type": "object" },
           "links": { "type": "array" },
           "tags": { "type": "array" },
-          "history": { "type": "array" }
+          "history": { "type": "array" },
+          "timeline": {
+            "type": "array",
+            "minItems": 90,
+            "maxItems": 90,
+            "items": {
+              "type": "object",
+              "required": ["date", "status", "statusLabel", "uptime"],
+              "properties": {
+                "date": { "type": "string", "format": "date" },
+                "status": { "type": "string" },
+                "statusLabel": { "type": "string" },
+                "uptime": { "type": "number" }
+              }
+            }
+          }
         }
       }
     }

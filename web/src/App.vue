@@ -23,6 +23,13 @@ const groupedComponents = computed(() => {
   return Array.from(groups.entries()).map(([name, items]) => ({ name, items }))
 })
 
+const timelineComponents = computed(() =>
+  components.value.map((component) => ({
+    ...component,
+    timeline: component.timeline ?? [],
+  })),
+)
+
 onMounted(async () => {
   try {
     const [statusResponse, componentsResponse, incidentsResponse] = await Promise.all([
@@ -68,6 +75,19 @@ function formatDate(value) {
     timeStyle: 'short',
   }).format(new Date(value))
 }
+
+function formatDay(value) {
+  if (!value) return ''
+  return new Intl.DateTimeFormat(undefined, {
+    month: 'short',
+    day: 'numeric',
+  }).format(new Date(`${value}T00:00:00Z`))
+}
+
+function uptimeLabel(value) {
+  if (typeof value !== 'number') return '100%'
+  return `${value.toFixed(value >= 99.995 ? 0 : 2)}%`
+}
 </script>
 
 <template>
@@ -103,6 +123,48 @@ function formatDate(value) {
         </dl>
       </section>
 
+      <section class="timeline-panel">
+        <div class="section-heading timeline-heading">
+          <div>
+            <h2>Past 90 days</h2>
+            <span>Daily component status from static history and incident data</span>
+          </div>
+          <strong>{{ uptimeLabel(Math.min(...timelineComponents.map((component) => component.uptime90d ?? 100))) }}</strong>
+        </div>
+
+        <div class="timeline-list">
+          <article
+            v-for="component in timelineComponents"
+            :key="`${component.id}-timeline`"
+            class="timeline-row"
+          >
+            <div class="timeline-label">
+              <h3>{{ component.name }}</h3>
+              <span>{{ uptimeLabel(component.uptime90d) }} uptime</span>
+            </div>
+            <div class="day-strip" :aria-label="`${component.name} 90 day history`">
+              <span
+                v-for="day in component.timeline"
+                :key="`${component.id}-${day.date}`"
+                class="day-cell"
+                :class="`tone-${toneFor(day.status)}`"
+                :title="`${formatDay(day.date)}: ${day.statusLabel}`"
+              ></span>
+            </div>
+          </article>
+        </div>
+
+        <div class="timeline-footer">
+          <span>{{ formatDay(timelineComponents[0]?.timeline?.[0]?.date) }}</span>
+          <div class="legend">
+            <span><i class="tone-ok"></i> Operational</span>
+            <span><i class="tone-warn"></i> Degraded</span>
+            <span><i class="tone-bad"></i> Outage</span>
+          </div>
+          <span>Today</span>
+        </div>
+      </section>
+
       <section class="content-grid">
         <div class="components-panel">
           <div class="section-heading">
@@ -117,6 +179,7 @@ function formatDate(value) {
                 <h4>{{ component.name }}</h4>
                 <p>{{ component.description }}</p>
               </div>
+              <span class="mini-uptime">{{ uptimeLabel(component.uptime90d) }}</span>
               <span class="status-pill" :class="`tone-${toneFor(component.status)}`">
                 <span></span>
                 {{ component.statusLabel }}

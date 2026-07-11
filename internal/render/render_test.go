@@ -34,4 +34,9 @@ func TestRenderWritesPublicAPIFiles(t *testing.T) {
 			t.Fatalf("expected %s: %v", name, err)
 		}
 	}
+
+	components := publicComponents(cfg.Components, nil, nil, time.Date(2026, 7, 11, 0, 0, 0, 0, time.UTC))
+	if got := len(components[0].Timeline); got != 90 {
+		t.Fatalf("timeline days = %d, want 90", got)
+	}
 }

@@ -17,6 +17,8 @@ The public status page does not call the GitHub API at runtime. It only reads lo
 
 Staatus can validate a YAML config, read incident/history data from the repo, render public API JSON, and display a polished static status page from that JSON. Checks are modeled in Go, with a basic HTTP check runner available internally, but scheduled GitHub Actions execution is still future work.
 
+The rendered component API includes a 90-day daily timeline per component, so the public page can show reliability history without making runtime API calls.
+
 ## CLI
 
 Run the CLI from the repository root:

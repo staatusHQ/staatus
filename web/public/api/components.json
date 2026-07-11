@@ -1,6 +1,6 @@
 {
   "schemaVersion": "staatus.public.v1",
-  "generatedAt": "2026-07-11T11:13:28Z",
+  "generatedAt": "2026-07-11T11:32:09Z",
   "components": [
     {
       "id": "edge-api",
@@ -9,6 +9,7 @@
       "group": "Core Platform",
       "status": "operational",
       "statusLabel": "Operational",
+      "uptime90d": 100,
       "check": {
         "type": "http",
         "url": "https://example.com/api/health",
@@ -47,6 +48,548 @@
           "latency_ms": 80,
           "uptime": 99.99
         }
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-31",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 99.99
+        },
+        {
+          "date": "2026-07-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        }
       ]
     },
     {
@@ -56,6 +599,7 @@
       "group": "Core Platform",
       "status": "operational",
       "statusLabel": "Operational",
+      "uptime90d": 99.98,
       "check": {
         "type": "http",
         "url": "https://example.com/dashboard/health",
@@ -87,6 +631,548 @@
           "latency_ms": 138,
           "uptime": 99.96
         }
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-31",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-02",
+          "status": "degraded",
+          "statusLabel": "Degraded performance",
+          "uptime": 98.5
+        },
+        {
+          "date": "2026-07-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 99.96
+        },
+        {
+          "date": "2026-07-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        }
       ]
     },
     {
@@ -96,6 +1182,7 @@
       "group": "Messaging",
       "status": "degraded",
       "statusLabel": "Degraded performance",
+      "uptime90d": 99.97,
       "check": {
         "type": "http",
         "url": "https://example.com/webhooks/health",
@@ -128,6 +1215,548 @@
           "latency_ms": 680,
           "uptime": 99.89
         }
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-31",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-10",
+          "status": "degraded",
+          "statusLabel": "Degraded performance",
+          "uptime": 98.5
+        },
+        {
+          "date": "2026-07-11",
+          "status": "degraded",
+          "statusLabel": "Degraded performance",
+          "uptime": 98.5
+        }
       ]
     },
     {
@@ -137,6 +1766,7 @@
       "group": "Support",
       "status": "operational",
       "statusLabel": "Operational",
+      "uptime90d": 100,
       "links": [
         {
           "label": "Docs",
@@ -163,6 +1793,548 @@
           "status": "operational",
           "checked_at": "2026-07-10T11:00:00Z",
           "latency_ms": 57,
+          "uptime": 100
+        }
+      ],
+      "timeline": [
+        {
+          "date": "2026-04-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-04-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-05-31",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-11",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-12",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-13",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-14",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-15",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-16",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-17",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-18",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-19",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-20",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-21",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-22",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-23",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-24",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-25",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-26",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-27",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-28",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-29",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-06-30",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-01",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-02",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-03",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-04",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-05",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-06",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-07",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-08",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-09",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-10",
+          "status": "operational",
+          "statusLabel": "Operational",
+          "uptime": 100
+        },
+        {
+          "date": "2026-07-11",
+          "status": "operational",
+          "statusLabel": "Operational",
           "uptime": 100
         }
       ]
