@@ -7,6 +7,7 @@ const incidents = ref({ active: [], recent: [] })
 const loading = ref(true)
 const error = ref('')
 
+const statusTone = computed(() => toneFor(status.value?.overall?.status))
 const activeIncidents = computed(() => incidents.value.active ?? [])
 const recentResolved = computed(() =>
   (incidents.value.recent ?? []).filter((incident) => incident.status === 'resolved').slice(0, 4),
@@ -25,6 +26,14 @@ const lowestUptime = computed(() => {
     .filter((value) => typeof value === 'number')
   if (!values.length) return null
   return Math.min(...values)
+})
+
+const timelineRange = computed(() => {
+  const first = timelineComponents.value[0]?.timeline?.[0]?.date
+  const lastTimeline = timelineComponents.value[0]?.timeline
+  const last = lastTimeline?.[lastTimeline.length - 1]?.date
+  if (!first || !last) return ''
+  return `${formatMonthYear(first)} - ${formatMonthYear(last)}`
 })
 
 onMounted(async () => {
@@ -82,9 +91,29 @@ function formatDay(value) {
   }).format(new Date(`${value}T00:00:00Z`))
 }
 
+function formatMonthYear(value) {
+  return new Intl.DateTimeFormat(undefined, {
+    month: 'short',
+    year: 'numeric',
+  }).format(new Date(`${value}T00:00:00Z`))
+}
+
 function uptimeLabel(value) {
   if (typeof value !== 'number') return 'No history'
   return `${value.toFixed(value >= 99.995 ? 0 : 2)}%`
+}
+
+function statusGlyph(value) {
+  if (value === 'operational') return ''
+  if (value === 'maintenance') return 'i'
+  return '!'
+}
+
+function statusMessage(value) {
+  if (value === 'operational') return 'No active issues are affecting monitored services.'
+  if (value === 'maintenance') return 'Scheduled maintenance is currently in progress.'
+  if (activeIncidents.value.length > 0) return 'We are tracking active incidents affecting one or more services.'
+  return 'One or more monitored services need attention.'
 }
 </script>
 
@@ -101,13 +130,20 @@ function uptimeLabel(value) {
         </a>
       </header>
 
+      <section class="status-summary" :class="`tone-${statusTone}`">
+        <span class="status-icon" aria-hidden="true">{{ statusGlyph(status.overall.status) }}</span>
+        <h2>{{ status.overall.label }}</h2>
+        <p>{{ statusMessage(status.overall.status) }}</p>
+        <span>Last updated {{ formatDate(status.lastUpdated) }}</span>
+      </section>
+
       <section class="timeline-panel">
         <div class="section-heading timeline-heading">
           <div>
-            <h2>{{ status.overall.label }}</h2>
-            <span>Past 90 days · Updated {{ formatDate(status.lastUpdated) }}</span>
+            <h2>System status</h2>
+            <span>{{ timelineRange }}</span>
           </div>
-          <strong>{{ uptimeLabel(lowestUptime) }}</strong>
+          <strong>{{ uptimeLabel(lowestUptime) }} uptime</strong>
         </div>
 
         <div class="timeline-list">
@@ -116,9 +152,15 @@ function uptimeLabel(value) {
             :key="`${component.id}-timeline`"
             class="timeline-row"
           >
-            <div class="timeline-label">
-              <h3>{{ component.name }}</h3>
-              <span>{{ uptimeLabel(component.uptime90d) }} uptime</span>
+            <div class="timeline-row-header">
+              <div class="timeline-label">
+                <span class="row-status-dot" :class="`tone-${toneFor(component.status)}`">
+                  {{ statusGlyph(component.status) }}
+                </span>
+                <h3>{{ component.name }}</h3>
+                <span>{{ component.statusLabel }}</span>
+              </div>
+              <strong>{{ uptimeLabel(component.uptime90d) }} uptime</strong>
             </div>
             <div class="day-strip" :aria-label="`${component.name} 90 day history`">
               <span
@@ -145,6 +187,7 @@ function uptimeLabel(value) {
       </section>
 
       <section v-if="activeIncidents.length" class="active-incidents">
+        <h2>Active incidents</h2>
         <article v-for="incident in activeIncidents" :key="incident.id" class="incident-card active">
           <div class="incident-meta">
             <span>{{ incident.status }}</span>
@@ -155,21 +198,19 @@ function uptimeLabel(value) {
         </article>
       </section>
 
-      <details v-if="recentResolved.length" class="details-panel">
-        <summary>Incident history</summary>
-        <div class="detail-body">
-          <div class="incident-list">
-            <article v-for="incident in recentResolved" :key="incident.id" class="incident-card">
-              <div class="incident-meta">
-                <span>{{ incident.status }}</span>
-                <time>{{ formatDate(incident.resolved_at || incident.started_at) }}</time>
-              </div>
-              <h3>{{ incident.title }}</h3>
-              <p>{{ incident.summary }}</p>
-            </article>
-          </div>
+      <section v-if="recentResolved.length" class="past-incidents">
+        <h2>Previous incidents</h2>
+        <div class="incident-list">
+          <article v-for="incident in recentResolved" :key="incident.id" class="incident-card">
+            <div class="incident-meta">
+              <span>{{ incident.status }}</span>
+              <time>{{ formatDate(incident.resolved_at || incident.started_at) }}</time>
+            </div>
+            <h3>{{ incident.title }}</h3>
+            <p>{{ incident.summary }}</p>
+          </article>
         </div>
-      </details>
+      </section>
     </section>
 
     <section v-else-if="loading" class="loading-state">
