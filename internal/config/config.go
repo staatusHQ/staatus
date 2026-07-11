@@ -26,6 +26,7 @@ type Page struct {
 	Description string `yaml:"description" json:"description,omitempty"`
 	URL         string `yaml:"url" json:"url,omitempty"`
 	Logo        string `yaml:"logo" json:"logo,omitempty"`
+	Contact     *Link  `yaml:"contact" json:"contact,omitempty"`
 }
 
 type Settings struct {
@@ -104,8 +105,19 @@ func (c *Config) Validate() error {
 	if strings.TrimSpace(c.Page.Name) == "" {
 		messages = append(messages, "page.name is required")
 	}
-	if c.Page.URL != "" && !validURL(c.Page.URL) {
+	if c.Page.URL != "" && !validWebURL(c.Page.URL) {
 		messages = append(messages, "page.url must be a valid URL")
+	}
+	if c.Page.Logo != "" && !validWebURL(c.Page.Logo) {
+		messages = append(messages, "page.logo must be a valid URL")
+	}
+	if c.Page.Contact != nil {
+		if strings.TrimSpace(c.Page.Contact.Label) == "" {
+			messages = append(messages, "page.contact.label is required")
+		}
+		if !validLinkURL(c.Page.Contact.URL) {
+			messages = append(messages, "page.contact.url must be a valid URL")
+		}
 	}
 	if len(c.Components) == 0 {
 		messages = append(messages, "at least one component is required")
@@ -138,7 +150,7 @@ func (c *Config) Validate() error {
 			if strings.TrimSpace(link.Label) == "" {
 				messages = append(messages, linkPrefix+".label is required")
 			}
-			if !validURL(link.URL) {
+			if !validLinkURL(link.URL) {
 				messages = append(messages, linkPrefix+".url must be a valid URL")
 			}
 		}
@@ -194,7 +206,7 @@ func validateCheck(prefix string, check Check) []string {
 	if check.Type != "http" {
 		messages = append(messages, prefix+".type must be http")
 	}
-	if !validURL(check.URL) {
+	if !validWebURL(check.URL) {
 		messages = append(messages, prefix+".url must be a valid URL")
 	}
 	if check.Method != strings.ToUpper(check.Method) {
@@ -211,12 +223,20 @@ func validateCheck(prefix string, check Check) []string {
 	return messages
 }
 
-func validURL(value string) bool {
+func validWebURL(value string) bool {
 	parsed, err := url.ParseRequestURI(value)
 	if err != nil {
 		return false
 	}
 	return parsed.Scheme == "http" || parsed.Scheme == "https"
+}
+
+func validLinkURL(value string) bool {
+	parsed, err := url.ParseRequestURI(value)
+	if err != nil {
+		return false
+	}
+	return parsed.Scheme == "http" || parsed.Scheme == "https" || parsed.Scheme == "mailto"
 }
 
 func IsValidationError(err error) bool {

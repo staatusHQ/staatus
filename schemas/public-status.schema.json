@@ -15,7 +15,16 @@
       "properties": {
         "name": { "type": "string" },
         "description": { "type": "string" },
-        "url": { "type": "string" }
+        "url": { "type": "string" },
+        "logo": { "type": "string" },
+        "contact": {
+          "type": "object",
+          "required": ["label", "url"],
+          "properties": {
+            "label": { "type": "string" },
+            "url": { "type": "string" }
+          }
+        }
       }
     },
     "overall": {

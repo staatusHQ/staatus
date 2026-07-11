@@ -21,6 +21,8 @@ The rendered component API includes a 90-day daily timeline per component, so th
 
 For new projects, `settings.missing_history: operational` fills days without check history as green operational days. Teams that prefer stricter reporting can set `settings.missing_history: unknown` to show missing days as neutral instead.
 
+The header is intentionally minimal. Set `page.logo` for an optional logo and `page.contact` for a right-aligned call-to-action link.
+
 ## CLI
 
 Run the CLI from the repository root:

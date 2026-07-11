@@ -14,7 +14,16 @@
         "name": { "type": "string", "minLength": 1 },
         "description": { "type": "string" },
         "url": { "type": "string", "format": "uri" },
-        "logo": { "type": "string" }
+        "logo": { "type": "string", "format": "uri" },
+        "contact": {
+          "type": "object",
+          "required": ["label", "url"],
+          "additionalProperties": false,
+          "properties": {
+            "label": { "type": "string", "minLength": 1 },
+            "url": { "type": "string", "format": "uri" }
+          }
+        }
       }
     },
     "settings": {

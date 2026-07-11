@@ -2,6 +2,9 @@ page:
   name: Staatus Cloud
   description: Reference status page for the Staatus v0 sample project.
   url: https://status.staatus.dev
+  contact:
+    label: Get in touch
+    url: mailto:support@example.com
 settings:
   timezone: UTC
   history_window: 90d

@@ -7,21 +7,10 @@ const incidents = ref({ active: [], recent: [] })
 const loading = ref(true)
 const error = ref('')
 
-const statusTone = computed(() => toneFor(status.value?.overall?.status))
 const activeIncidents = computed(() => incidents.value.active ?? [])
 const recentResolved = computed(() =>
   (incidents.value.recent ?? []).filter((incident) => incident.status === 'resolved').slice(0, 4),
 )
-
-const groupedComponents = computed(() => {
-  const groups = new Map()
-  for (const component of components.value) {
-    const group = component.group || 'Other'
-    if (!groups.has(group)) groups.set(group, [])
-    groups.get(group).push(component)
-  }
-  return Array.from(groups.entries()).map(([name, items]) => ({ name, items }))
-})
 
 const timelineComponents = computed(() =>
   components.value.map((component) => ({
@@ -103,28 +92,20 @@ function uptimeLabel(value) {
   <main class="page-shell">
     <section class="status-board" v-if="!loading && !error">
       <header class="page-header">
-        <div>
-          <p class="eyebrow">Live service status</p>
+        <div class="brand">
+          <img v-if="status.page.logo" :src="status.page.logo" alt="" />
           <h1>{{ status.page.name }}</h1>
-          <p class="description">{{ status.page.description }}</p>
         </div>
-        <div class="header-actions">
-          <span class="current-pill" :class="`tone-${statusTone}`">
-            <span></span>
-            {{ status.overall.label }}
-          </span>
-          <div class="updated">
-            <span>Updated</span>
-            <strong>{{ formatDate(status.lastUpdated) }}</strong>
-          </div>
-        </div>
+        <a v-if="status.page.contact" class="contact-button" :href="status.page.contact.url">
+          {{ status.page.contact.label }}
+        </a>
       </header>
 
       <section class="timeline-panel">
         <div class="section-heading timeline-heading">
           <div>
-            <h2>Past 90 days</h2>
-            <span>Daily status from static history and incidents</span>
+            <h2>{{ status.overall.label }}</h2>
+            <span>Past 90 days · Updated {{ formatDate(status.lastUpdated) }}</span>
           </div>
           <strong>{{ uptimeLabel(lowestUptime) }}</strong>
         </div>
@@ -174,25 +155,10 @@ function uptimeLabel(value) {
         </article>
       </section>
 
-      <details class="details-panel">
-        <summary>Component details and incident history</summary>
+      <details v-if="recentResolved.length" class="details-panel">
+        <summary>Incident history</summary>
         <div class="detail-body">
-          <section v-for="group in groupedComponents" :key="group.name" class="component-group">
-            <h3>{{ group.name }}</h3>
-            <article v-for="component in group.items" :key="component.id" class="component-row">
-              <div>
-                <h4>{{ component.name }}</h4>
-                <p>{{ component.description }}</p>
-              </div>
-              <span class="mini-uptime">{{ uptimeLabel(component.uptime90d) }}</span>
-              <span class="status-pill" :class="`tone-${toneFor(component.status)}`">
-                <span></span>
-                {{ component.statusLabel }}
-              </span>
-            </article>
-          </section>
-
-          <div v-if="recentResolved.length" class="incident-list">
+          <div class="incident-list">
             <article v-for="incident in recentResolved" :key="incident.id" class="incident-card">
               <div class="incident-meta">
                 <span>{{ incident.status }}</span>
