@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.staatus.dev/public-components.schema.json",
+  "title": "Staatus public components API",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "components"],
+  "properties": {
+    "schemaVersion": { "const": "staatus.public.v1" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "components": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "status", "statusLabel"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "description": { "type": "string" },
+          "group": { "type": "string" },
+          "status": { "type": "string" },
+          "statusLabel": { "type": "string" },
+          "check": { "type": "object" },
+          "links": { "type": "array" },
+          "tags": { "type": "array" },
+          "history": { "type": "array" }
+        }
+      }
+    }
+  }
+}

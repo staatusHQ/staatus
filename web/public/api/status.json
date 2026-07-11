@@ -1,0 +1,121 @@
+{
+  "schemaVersion": "staatus.public.v1",
+  "generatedAt": "2026-07-11T11:13:28Z",
+  "page": {
+    "name": "Staatus Cloud",
+    "description": "Reference status page for the Staatus v0 sample project.",
+    "url": "https://status.staatus.dev"
+  },
+  "overall": {
+    "status": "degraded",
+    "label": "Degraded performance"
+  },
+  "summary": {
+    "components": {
+      "degraded": 1,
+      "maintenance": 0,
+      "major_outage": 0,
+      "operational": 3,
+      "partial_outage": 0
+    },
+    "incidents": {
+      "active": 1,
+      "resolved": 1
+    }
+  },
+  "lastUpdated": "2026-07-11T11:13:28Z",
+  "history": {
+    "dashboard": [
+      {
+        "component_id": "dashboard",
+        "status": "operational",
+        "checked_at": "2026-07-10T09:00:00Z",
+        "latency_ms": 145,
+        "uptime": 99.95
+      },
+      {
+        "component_id": "dashboard",
+        "status": "operational",
+        "checked_at": "2026-07-10T10:00:00Z",
+        "latency_ms": 151,
+        "uptime": 99.95
+      },
+      {
+        "component_id": "dashboard",
+        "status": "operational",
+        "checked_at": "2026-07-10T11:00:00Z",
+        "latency_ms": 138,
+        "uptime": 99.96
+      }
+    ],
+    "docs": [
+      {
+        "component_id": "docs",
+        "status": "operational",
+        "checked_at": "2026-07-10T09:00:00Z",
+        "latency_ms": 62,
+        "uptime": 100
+      },
+      {
+        "component_id": "docs",
+        "status": "operational",
+        "checked_at": "2026-07-10T10:00:00Z",
+        "latency_ms": 59,
+        "uptime": 100
+      },
+      {
+        "component_id": "docs",
+        "status": "operational",
+        "checked_at": "2026-07-10T11:00:00Z",
+        "latency_ms": 57,
+        "uptime": 100
+      }
+    ],
+    "edge-api": [
+      {
+        "component_id": "edge-api",
+        "status": "operational",
+        "checked_at": "2026-07-10T09:00:00Z",
+        "latency_ms": 82,
+        "uptime": 99.99
+      },
+      {
+        "component_id": "edge-api",
+        "status": "operational",
+        "checked_at": "2026-07-10T10:00:00Z",
+        "latency_ms": 88,
+        "uptime": 99.99
+      },
+      {
+        "component_id": "edge-api",
+        "status": "operational",
+        "checked_at": "2026-07-10T11:00:00Z",
+        "latency_ms": 80,
+        "uptime": 99.99
+      }
+    ],
+    "webhooks": [
+      {
+        "component_id": "webhooks",
+        "status": "operational",
+        "checked_at": "2026-07-10T09:00:00Z",
+        "latency_ms": 210,
+        "uptime": 99.91
+      },
+      {
+        "component_id": "webhooks",
+        "status": "degraded",
+        "checked_at": "2026-07-10T10:00:00Z",
+        "latency_ms": 930,
+        "uptime": 99.89
+      },
+      {
+        "component_id": "webhooks",
+        "status": "degraded",
+        "checked_at": "2026-07-10T11:00:00Z",
+        "latency_ms": 680,
+        "uptime": 99.89
+      }
+    ]
+  }
+}

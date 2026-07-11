@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.staatus.dev/public-incidents.schema.json",
+  "title": "Staatus public incidents API",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "active", "recent"],
+  "properties": {
+    "schemaVersion": { "const": "staatus.public.v1" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "active": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/incident" }
+    },
+    "recent": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/incident" }
+    }
+  },
+  "$defs": {
+    "incident": {
+      "type": "object",
+      "required": ["id", "title", "status", "impact", "components", "started_at", "updates"],
+      "properties": {
+        "id": { "type": "string" },
+        "title": { "type": "string" },
+        "status": { "type": "string" },
+        "impact": { "type": "string" },
+        "components": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "started_at": { "type": "string", "format": "date-time" },
+        "resolved_at": { "type": "string", "format": "date-time" },
+        "summary": { "type": "string" },
+        "updates": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["status", "body", "created_at"],
+            "properties": {
+              "status": { "type": "string" },
+              "body": { "type": "string" },
+              "created_at": { "type": "string", "format": "date-time" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

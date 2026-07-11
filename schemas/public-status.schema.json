@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.staatus.dev/public-status.schema.json",
+  "title": "Staatus public status API",
+  "type": "object",
+  "required": ["schemaVersion", "generatedAt", "page", "overall", "summary", "lastUpdated"],
+  "additionalProperties": true,
+  "properties": {
+    "schemaVersion": { "const": "staatus.public.v1" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "lastUpdated": { "type": "string", "format": "date-time" },
+    "page": {
+      "type": "object",
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string" },
+        "description": { "type": "string" },
+        "url": { "type": "string" }
+      }
+    },
+    "overall": {
+      "type": "object",
+      "required": ["status", "label"],
+      "properties": {
+        "status": {
+          "type": "string",
+          "enum": ["operational", "degraded", "partial_outage", "major_outage", "maintenance"]
+        },
+        "label": { "type": "string" }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": ["components", "incidents"],
+      "properties": {
+        "components": { "type": "object", "additionalProperties": { "type": "integer" } },
+        "incidents": { "type": "object", "additionalProperties": { "type": "integer" } }
+      }
+    }
+  }
+}

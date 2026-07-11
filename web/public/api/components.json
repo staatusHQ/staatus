@@ -1,0 +1,171 @@
+{
+  "schemaVersion": "staatus.public.v1",
+  "generatedAt": "2026-07-11T11:13:28Z",
+  "components": [
+    {
+      "id": "edge-api",
+      "name": "Edge API",
+      "description": "Public API and authenticated edge traffic.",
+      "group": "Core Platform",
+      "status": "operational",
+      "statusLabel": "Operational",
+      "check": {
+        "type": "http",
+        "url": "https://example.com/api/health",
+        "method": "GET",
+        "expectedStatus": 200
+      },
+      "links": [
+        {
+          "label": "API Docs",
+          "url": "https://example.com/docs/api"
+        }
+      ],
+      "tags": [
+        "public",
+        "api"
+      ],
+      "history": [
+        {
+          "component_id": "edge-api",
+          "status": "operational",
+          "checked_at": "2026-07-10T09:00:00Z",
+          "latency_ms": 82,
+          "uptime": 99.99
+        },
+        {
+          "component_id": "edge-api",
+          "status": "operational",
+          "checked_at": "2026-07-10T10:00:00Z",
+          "latency_ms": 88,
+          "uptime": 99.99
+        },
+        {
+          "component_id": "edge-api",
+          "status": "operational",
+          "checked_at": "2026-07-10T11:00:00Z",
+          "latency_ms": 80,
+          "uptime": 99.99
+        }
+      ]
+    },
+    {
+      "id": "dashboard",
+      "name": "Dashboard",
+      "description": "Customer web dashboard and admin workflows.",
+      "group": "Core Platform",
+      "status": "operational",
+      "statusLabel": "Operational",
+      "check": {
+        "type": "http",
+        "url": "https://example.com/dashboard/health",
+        "method": "GET",
+        "expectedStatus": 200
+      },
+      "tags": [
+        "web"
+      ],
+      "history": [
+        {
+          "component_id": "dashboard",
+          "status": "operational",
+          "checked_at": "2026-07-10T09:00:00Z",
+          "latency_ms": 145,
+          "uptime": 99.95
+        },
+        {
+          "component_id": "dashboard",
+          "status": "operational",
+          "checked_at": "2026-07-10T10:00:00Z",
+          "latency_ms": 151,
+          "uptime": 99.95
+        },
+        {
+          "component_id": "dashboard",
+          "status": "operational",
+          "checked_at": "2026-07-10T11:00:00Z",
+          "latency_ms": 138,
+          "uptime": 99.96
+        }
+      ]
+    },
+    {
+      "id": "webhooks",
+      "name": "Webhook Delivery",
+      "description": "Outbound event delivery pipeline.",
+      "group": "Messaging",
+      "status": "degraded",
+      "statusLabel": "Degraded performance",
+      "check": {
+        "type": "http",
+        "url": "https://example.com/webhooks/health",
+        "method": "GET",
+        "expectedStatus": 200
+      },
+      "tags": [
+        "async",
+        "events"
+      ],
+      "history": [
+        {
+          "component_id": "webhooks",
+          "status": "operational",
+          "checked_at": "2026-07-10T09:00:00Z",
+          "latency_ms": 210,
+          "uptime": 99.91
+        },
+        {
+          "component_id": "webhooks",
+          "status": "degraded",
+          "checked_at": "2026-07-10T10:00:00Z",
+          "latency_ms": 930,
+          "uptime": 99.89
+        },
+        {
+          "component_id": "webhooks",
+          "status": "degraded",
+          "checked_at": "2026-07-10T11:00:00Z",
+          "latency_ms": 680,
+          "uptime": 99.89
+        }
+      ]
+    },
+    {
+      "id": "docs",
+      "name": "Documentation",
+      "description": "Public docs and changelog.",
+      "group": "Support",
+      "status": "operational",
+      "statusLabel": "Operational",
+      "links": [
+        {
+          "label": "Docs",
+          "url": "https://example.com/docs"
+        }
+      ],
+      "history": [
+        {
+          "component_id": "docs",
+          "status": "operational",
+          "checked_at": "2026-07-10T09:00:00Z",
+          "latency_ms": 62,
+          "uptime": 100
+        },
+        {
+          "component_id": "docs",
+          "status": "operational",
+          "checked_at": "2026-07-10T10:00:00Z",
+          "latency_ms": 59,
+          "uptime": 100
+        },
+        {
+          "component_id": "docs",
+          "status": "operational",
+          "checked_at": "2026-07-10T11:00:00Z",
+          "latency_ms": 57,
+          "uptime": 100
+        }
+      ]
+    }
+  ]
+}

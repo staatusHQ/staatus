@@ -1,0 +1,12 @@
+{"component_id":"edge-api","status":"operational","checked_at":"2026-07-10T09:00:00Z","latency_ms":82,"uptime":99.99}
+{"component_id":"edge-api","status":"operational","checked_at":"2026-07-10T10:00:00Z","latency_ms":88,"uptime":99.99}
+{"component_id":"edge-api","status":"operational","checked_at":"2026-07-10T11:00:00Z","latency_ms":80,"uptime":99.99}
+{"component_id":"dashboard","status":"operational","checked_at":"2026-07-10T09:00:00Z","latency_ms":145,"uptime":99.95}
+{"component_id":"dashboard","status":"operational","checked_at":"2026-07-10T10:00:00Z","latency_ms":151,"uptime":99.95}
+{"component_id":"dashboard","status":"operational","checked_at":"2026-07-10T11:00:00Z","latency_ms":138,"uptime":99.96}
+{"component_id":"webhooks","status":"operational","checked_at":"2026-07-10T09:00:00Z","latency_ms":210,"uptime":99.91}
+{"component_id":"webhooks","status":"degraded","checked_at":"2026-07-10T10:00:00Z","latency_ms":930,"uptime":99.89}
+{"component_id":"webhooks","status":"degraded","checked_at":"2026-07-10T11:00:00Z","latency_ms":680,"uptime":99.89}
+{"component_id":"docs","status":"operational","checked_at":"2026-07-10T09:00:00Z","latency_ms":62,"uptime":100}
+{"component_id":"docs","status":"operational","checked_at":"2026-07-10T10:00:00Z","latency_ms":59,"uptime":100}
+{"component_id":"docs","status":"operational","checked_at":"2026-07-10T11:00:00Z","latency_ms":57,"uptime":100}

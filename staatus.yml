@@ -1,0 +1,59 @@
+page:
+  name: Staatus Cloud
+  description: Reference status page for the Staatus v0 sample project.
+  url: https://status.staatus.dev
+settings:
+  timezone: UTC
+  history_window: 90d
+  default_check_tick: 5m
+components:
+  - id: edge-api
+    name: Edge API
+    description: Public API and authenticated edge traffic.
+    group: Core Platform
+    check:
+      type: http
+      url: https://example.com/api/health
+      method: GET
+      timeout: 8s
+      expected_status: 200
+    links:
+      - label: API Docs
+        url: https://example.com/docs/api
+    tags:
+      - public
+      - api
+  - id: dashboard
+    name: Dashboard
+    description: Customer web dashboard and admin workflows.
+    group: Core Platform
+    check:
+      type: http
+      url: https://example.com/dashboard/health
+      method: GET
+      timeout: 8s
+      expected_status: 200
+    tags:
+      - web
+  - id: webhooks
+    name: Webhook Delivery
+    description: Outbound event delivery pipeline.
+    group: Messaging
+    status: operational
+    check:
+      type: http
+      url: https://example.com/webhooks/health
+      method: GET
+      timeout: 10s
+      expected_status: 200
+    tags:
+      - async
+      - events
+  - id: docs
+    name: Documentation
+    description: Public docs and changelog.
+    group: Support
+    status: operational
+    links:
+      - label: Docs
+        url: https://example.com/docs
