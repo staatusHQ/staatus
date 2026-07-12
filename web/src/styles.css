@@ -422,7 +422,15 @@ h1 {
 .incident-detail {
   display: grid;
   gap: 18px;
+  min-width: 0;
   margin-top: 46px;
+}
+
+.incident-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
 }
 
 .back-link {
@@ -440,7 +448,31 @@ h1 {
   color: #20242c;
 }
 
+.copy-link-button {
+  min-height: 32px;
+  padding: 5px 11px;
+  border: 1px solid #d8dee8;
+  border-radius: 999px;
+  color: #687283;
+  background: #ffffff;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.copy-link-button:hover {
+  color: #20242c;
+  border-color: #ccd4df;
+}
+
+.copy-link-button:focus-visible,
+.back-link:focus-visible {
+  outline: 2px solid #20242c;
+  outline-offset: 3px;
+}
+
 .incident-detail-card {
+  min-width: 0;
   padding: 28px;
   border: 1px solid #dfe4ea;
   border-radius: 8px;
@@ -489,6 +521,40 @@ h1 {
   margin: 18px 0 0;
   color: #596171;
   font-size: 1rem;
+}
+
+.incident-share {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 20px;
+  color: #8a92a1;
+  font-size: 0.82rem;
+}
+
+.incident-share span {
+  flex: 0 0 auto;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.incident-share a {
+  display: block;
+  flex: 1 1 auto;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  color: #687283;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.incident-share a:hover {
+  color: #20242c;
 }
 
 .incident-facts {
@@ -611,6 +677,21 @@ h1 {
 
   .incident-detail-card {
     padding: 22px;
+  }
+
+  .incident-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .incident-share {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .incident-share a {
+    width: 100%;
   }
 
   .incident-detail-header,

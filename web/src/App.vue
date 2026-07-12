@@ -8,6 +8,8 @@ const loading = ref(true)
 const error = ref('')
 const activeDayKey = ref('')
 const selectedIncidentID = ref('')
+const copiedIncidentLink = ref(false)
+let copiedIncidentTimer
 
 const statusTone = computed(() => toneFor(status.value?.overall?.status))
 const activeIncidents = computed(() => incidents.value.active ?? [])
@@ -42,6 +44,7 @@ const lowestUptime = computed(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('hashchange', syncRoute)
+  window.clearTimeout(copiedIncidentTimer)
 })
 
 const timelineRange = computed(() => {
@@ -174,6 +177,23 @@ function closeIncident() {
   selectedIncidentID.value = ''
 }
 
+function incidentURL(id) {
+  return `${window.location.origin}${window.location.pathname}${window.location.search}${incidentPath(id)}`
+}
+
+async function copyIncidentLink(id) {
+  try {
+    await navigator.clipboard.writeText(incidentURL(id))
+    copiedIncidentLink.value = true
+    window.clearTimeout(copiedIncidentTimer)
+    copiedIncidentTimer = window.setTimeout(() => {
+      copiedIncidentLink.value = false
+    }, 1800)
+  } catch {
+    copiedIncidentLink.value = false
+  }
+}
+
 function componentNames(ids = []) {
   return ids
     .map((id) => components.value.find((component) => component.id === id)?.name ?? id)
@@ -206,7 +226,17 @@ function incidentTone(impact) {
 
       <template v-if="selectedIncident">
         <section class="incident-detail">
-          <button type="button" class="back-link" @click="closeIncident">Back to status</button>
+          <div class="incident-actions">
+            <button type="button" class="back-link" @click="closeIncident">Back to status</button>
+            <button
+              type="button"
+              class="copy-link-button"
+              :aria-label="`Copy share link for ${selectedIncident.title}`"
+              @click="copyIncidentLink(selectedIncident.id)"
+            >
+              {{ copiedIncidentLink ? 'Copied' : 'Copy link' }}
+            </button>
+          </div>
 
           <article class="incident-detail-card">
             <div class="incident-detail-header">
@@ -225,6 +255,13 @@ function incidentTone(impact) {
             <p v-if="selectedIncident.summary" class="incident-summary">
               {{ selectedIncident.summary }}
             </p>
+
+            <div class="incident-share">
+              <span>Share</span>
+              <a :href="incidentPath(selectedIncident.id)">
+                {{ incidentURL(selectedIncident.id) }}
+              </a>
+            </div>
 
             <dl class="incident-facts">
               <div>
