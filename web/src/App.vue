@@ -199,10 +199,26 @@ async function copyIncidentLink(id) {
   }
 }
 
-function componentNames(ids = []) {
-  return ids
-    .map((id) => components.value.find((component) => component.id === id)?.name ?? id)
-    .join(', ')
+function incidentComponents(ids = []) {
+  return ids.map((id) => components.value.find((component) => component.id === id) ?? { id, name: id })
+}
+
+function incidentUpdates(incident) {
+  return [...(incident?.updates ?? [])].reverse()
+}
+
+function latestIncidentUpdate(incident) {
+  return incidentUpdates(incident)[0]
+}
+
+function impactLabel(impact) {
+  return {
+    minor: 'Minor incident',
+    degraded: 'Degraded performance',
+    major: 'Partial outage',
+    critical: 'Major outage',
+    maintenance: 'Maintenance',
+  }[impact] ?? 'Incident'
 }
 
 function incidentTone(impact) {
@@ -243,22 +259,24 @@ function incidentTone(impact) {
             </button>
           </div>
 
-          <article class="incident-detail-card">
-            <div class="incident-detail-header">
-              <div>
-                <span class="incident-kicker">Incident</span>
-                <h2>{{ selectedIncident.title }}</h2>
-              </div>
-              <span
-                class="incident-status-badge"
-                :class="`tone-${incidentTone(selectedIncident.impact)}`"
-              >
-                {{ selectedIncident.status }}
-              </span>
+          <article class="incident-hero" :class="`tone-${incidentTone(selectedIncident.impact)}`">
+            <header class="incident-hero-title">
+              <h2>{{ selectedIncident.title }}</h2>
+            </header>
+
+            <div class="incident-current">
+              <strong>{{ selectedIncident.status }}</strong>
+              <span>{{ impactLabel(selectedIncident.impact) }}</span>
             </div>
 
             <p v-if="selectedIncident.summary" class="incident-summary">
               {{ selectedIncident.summary }}
+            </p>
+
+            <p v-if="latestIncidentUpdate(selectedIncident)" class="incident-latest">
+              {{ formatDate(latestIncidentUpdate(selectedIncident).created_at) }}
+              <span>·</span>
+              <a href="#incident-updates">View all updates</a>
             </p>
 
             <div class="incident-share">
@@ -267,37 +285,59 @@ function incidentTone(impact) {
                 {{ incidentURL(selectedIncident.id) }}
               </a>
             </div>
+          </article>
 
-            <dl class="incident-facts">
-              <div>
-                <dt>Started</dt>
-                <dd>{{ formatDate(selectedIncident.started_at) }}</dd>
-              </div>
-              <div v-if="selectedIncident.resolved_at">
-                <dt>Resolved</dt>
-                <dd>{{ formatDate(selectedIncident.resolved_at) }}</dd>
-              </div>
-              <div>
-                <dt>Affected</dt>
-                <dd>{{ componentNames(selectedIncident.components) }}</dd>
-              </div>
-            </dl>
-
-            <div v-if="selectedIncident.updates?.length" class="incident-updates">
-              <h3>Updates</h3>
+          <section class="affected-components-panel">
+            <h2>Affected components</h2>
+            <div class="incident-time-range">
+              <time>{{ formatDate(selectedIncident.started_at) }}</time>
+              <time>{{ selectedIncident.resolved_at ? formatDate(selectedIncident.resolved_at) : 'Now' }}</time>
+            </div>
+            <div class="affected-component-list">
               <article
-                v-for="update in selectedIncident.updates"
-                :key="`${selectedIncident.id}-${update.created_at}`"
-                class="incident-update"
+                v-for="component in incidentComponents(selectedIncident.components)"
+                :key="component.id"
+                class="affected-component"
               >
-                <div class="incident-meta">
-                  <span>{{ update.status }}</span>
-                  <time>{{ formatDate(update.created_at) }}</time>
+                <div class="affected-component-title">
+                  <span
+                    class="component-alert-dot"
+                    :class="`tone-${incidentTone(selectedIncident.impact)}`"
+                  >
+                    !
+                  </span>
+                  <strong>{{ component.name }}</strong>
+                  <span>{{ impactLabel(selectedIncident.impact) }}</span>
                 </div>
-                <p>{{ update.body }}</p>
+                <div class="component-incident-bar" :class="`tone-${incidentTone(selectedIncident.impact)}`">
+                  <span></span>
+                </div>
               </article>
             </div>
-          </article>
+          </section>
+
+          <section
+            v-if="selectedIncident.updates?.length"
+            id="incident-updates"
+            class="incident-updates-panel"
+          >
+            <h2>Updates</h2>
+            <div class="incident-timeline">
+              <article
+                v-for="update in incidentUpdates(selectedIncident)"
+                :key="`${selectedIncident.id}-${update.created_at}`"
+                class="incident-update"
+                :class="`tone-${incidentTone(selectedIncident.impact)}`"
+              >
+                <span class="update-dot" aria-hidden="true"></span>
+                <div>
+                  <h3>{{ update.status }}</h3>
+                  <p>{{ update.body }}</p>
+                  <time>{{ formatDate(update.created_at) }}</time>
+                </div>
+              </article>
+            </div>
+          </section>
         </section>
       </template>
 
