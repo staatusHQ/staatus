@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 
 const status = ref(null)
 const components = ref([])
@@ -7,9 +7,20 @@ const incidents = ref({ active: [], recent: [] })
 const loading = ref(true)
 const error = ref('')
 const activeDayKey = ref('')
+const selectedIncidentID = ref('')
 
 const statusTone = computed(() => toneFor(status.value?.overall?.status))
 const activeIncidents = computed(() => incidents.value.active ?? [])
+const allIncidents = computed(() => {
+  const byID = new Map()
+  for (const incident of [...(incidents.value.active ?? []), ...(incidents.value.recent ?? [])]) {
+    byID.set(incident.id, incident)
+  }
+  return Array.from(byID.values())
+})
+const selectedIncident = computed(() =>
+  allIncidents.value.find((incident) => incident.id === selectedIncidentID.value),
+)
 const recentResolved = computed(() =>
   (incidents.value.recent ?? []).filter((incident) => incident.status === 'resolved').slice(0, 4),
 )
@@ -29,6 +40,10 @@ const lowestUptime = computed(() => {
   return Math.min(...values)
 })
 
+onBeforeUnmount(() => {
+  window.removeEventListener('hashchange', syncRoute)
+})
+
 const timelineRange = computed(() => {
   const first = timelineComponents.value[0]?.timeline?.[0]?.date
   const lastTimeline = timelineComponents.value[0]?.timeline
@@ -38,6 +53,9 @@ const timelineRange = computed(() => {
 })
 
 onMounted(async () => {
+  syncRoute()
+  window.addEventListener('hashchange', syncRoute)
+
   try {
     const [statusResponse, componentsResponse, incidentsResponse] = await Promise.all([
       fetch('/api/status.json'),
@@ -129,14 +147,47 @@ function handleDayClick(day) {
   const incidentID = day.incidents?.[0]?.id
   if (!incidentID) return
 
-  const target = document.getElementById(`incident-${incidentID}`)
-  target?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+  openIncident(incidentID)
 }
 
 function statusGlyph(value) {
   if (value === 'operational') return ''
   if (value === 'maintenance') return 'i'
   return '!'
+}
+
+function syncRoute() {
+  const match = window.location.hash.match(/^#incident\/([^/]+)$/)
+  selectedIncidentID.value = match ? decodeURIComponent(match[1]) : ''
+}
+
+function incidentPath(id) {
+  return `#incident/${encodeURIComponent(id)}`
+}
+
+function openIncident(id) {
+  window.location.hash = incidentPath(id)
+}
+
+function closeIncident() {
+  history.pushState('', document.title, window.location.pathname + window.location.search)
+  selectedIncidentID.value = ''
+}
+
+function componentNames(ids = []) {
+  return ids
+    .map((id) => components.value.find((component) => component.id === id)?.name ?? id)
+    .join(', ')
+}
+
+function incidentTone(impact) {
+  return {
+    minor: 'warn',
+    degraded: 'warn',
+    major: 'bad',
+    critical: 'bad',
+    maintenance: 'info',
+  }[impact] ?? 'neutral'
 }
 </script>
 
@@ -153,105 +204,166 @@ function statusGlyph(value) {
         </a>
       </header>
 
-      <section class="status-summary" :class="`tone-${statusTone}`">
-        <span class="status-icon" aria-hidden="true">{{ statusGlyph(status.overall.status) }}</span>
-        <h2>{{ status.overall.label }}</h2>
-      </section>
+      <template v-if="selectedIncident">
+        <section class="incident-detail">
+          <button type="button" class="back-link" @click="closeIncident">Back to status</button>
 
-      <section class="timeline-panel">
-        <div class="section-heading timeline-heading">
-          <div>
-            <h2>System status</h2>
-            <span>{{ timelineRange }}</span>
-          </div>
-          <strong>{{ uptimeLabel(lowestUptime) }} uptime</strong>
-        </div>
-
-        <div class="timeline-list">
-          <article
-            v-for="component in timelineComponents"
-            :key="`${component.id}-timeline`"
-            class="timeline-row"
-          >
-            <div class="timeline-row-header">
-              <div class="timeline-label">
-                <span class="row-status-dot" :class="`tone-${toneFor(component.status)}`">
-                  {{ statusGlyph(component.status) }}
-                </span>
-                <h3>{{ component.name }}</h3>
-                <span>{{ component.statusLabel }}</span>
+          <article class="incident-detail-card">
+            <div class="incident-detail-header">
+              <div>
+                <span class="incident-kicker">Incident</span>
+                <h2>{{ selectedIncident.title }}</h2>
               </div>
-              <strong>{{ uptimeLabel(component.uptime90d) }} uptime</strong>
-            </div>
-            <div class="day-strip" :aria-label="`${component.name} 90 day history`">
-              <button
-                v-for="day in component.timeline"
-                :key="`${component.id}-${day.date}`"
-                type="button"
-                class="day-cell"
-                :class="[
-                  `tone-${toneFor(day.status)}`,
-                  {
-                    clickable: day.incidents?.length,
-                    'show-popover': activeDayKey === dayKey(component, day),
-                  },
-                ]"
-                :aria-label="dayAriaLabel(component, day)"
-                :title="dayTitle(component, day)"
-                :tabindex="day.incidents?.length ? 0 : -1"
-                @focus="activeDayKey = dayKey(component, day)"
-                @blur="activeDayKey = ''"
-                @mouseover="activeDayKey = dayKey(component, day)"
-                @mouseout="activeDayKey = ''"
-                @click="handleDayClick(day)"
+              <span
+                class="incident-status-badge"
+                :class="`tone-${incidentTone(selectedIncident.impact)}`"
               >
-                <span class="day-popover" role="tooltip">
-                  <strong>{{ formatDay(day.date) }}</strong>
-                  <span>{{ day.statusLabel }}</span>
-                  <em>{{ dayIncidentSummary(day) }}</em>
-                </span>
-              </button>
+                {{ selectedIncident.status }}
+              </span>
+            </div>
+
+            <p v-if="selectedIncident.summary" class="incident-summary">
+              {{ selectedIncident.summary }}
+            </p>
+
+            <dl class="incident-facts">
+              <div>
+                <dt>Started</dt>
+                <dd>{{ formatDate(selectedIncident.started_at) }}</dd>
+              </div>
+              <div v-if="selectedIncident.resolved_at">
+                <dt>Resolved</dt>
+                <dd>{{ formatDate(selectedIncident.resolved_at) }}</dd>
+              </div>
+              <div>
+                <dt>Affected</dt>
+                <dd>{{ componentNames(selectedIncident.components) }}</dd>
+              </div>
+            </dl>
+
+            <div v-if="selectedIncident.updates?.length" class="incident-updates">
+              <h3>Updates</h3>
+              <article
+                v-for="update in selectedIncident.updates"
+                :key="`${selectedIncident.id}-${update.created_at}`"
+                class="incident-update"
+              >
+                <div class="incident-meta">
+                  <span>{{ update.status }}</span>
+                  <time>{{ formatDate(update.created_at) }}</time>
+                </div>
+                <p>{{ update.body }}</p>
+              </article>
             </div>
           </article>
-        </div>
+        </section>
+      </template>
 
-      </section>
+      <template v-else>
+        <section class="status-summary" :class="`tone-${statusTone}`">
+          <span class="status-icon" aria-hidden="true">{{ statusGlyph(status.overall.status) }}</span>
+          <h2>{{ status.overall.label }}</h2>
+        </section>
 
-      <section v-if="activeIncidents.length" class="active-incidents">
-        <h2>Active incidents</h2>
-        <article
-          v-for="incident in activeIncidents"
-          :id="`incident-${incident.id}`"
-          :key="incident.id"
-          class="incident-card active"
-        >
-          <div class="incident-meta">
-            <span>{{ incident.status }}</span>
-            <time>{{ formatDate(incident.started_at) }}</time>
+        <section class="timeline-panel">
+          <div class="section-heading timeline-heading">
+            <div>
+              <h2>System status</h2>
+              <span>{{ timelineRange }}</span>
+            </div>
+            <strong>{{ uptimeLabel(lowestUptime) }} uptime</strong>
           </div>
-          <h3>{{ incident.title }}</h3>
-          <p>{{ incident.summary }}</p>
-        </article>
-      </section>
 
-      <section v-if="recentResolved.length" class="past-incidents">
-        <h2>Previous incidents</h2>
-        <div class="incident-list">
-          <article
-            v-for="incident in recentResolved"
+          <div class="timeline-list">
+            <article
+              v-for="component in timelineComponents"
+              :key="`${component.id}-timeline`"
+              class="timeline-row"
+            >
+              <div class="timeline-row-header">
+                <div class="timeline-label">
+                  <span class="row-status-dot" :class="`tone-${toneFor(component.status)}`">
+                    {{ statusGlyph(component.status) }}
+                  </span>
+                  <h3>{{ component.name }}</h3>
+                  <span>{{ component.statusLabel }}</span>
+                </div>
+                <strong>{{ uptimeLabel(component.uptime90d) }} uptime</strong>
+              </div>
+              <div class="day-strip" :aria-label="`${component.name} 90 day history`">
+                <button
+                  v-for="day in component.timeline"
+                  :key="`${component.id}-${day.date}`"
+                  type="button"
+                  class="day-cell"
+                  :class="[
+                    `tone-${toneFor(day.status)}`,
+                    {
+                      clickable: day.incidents?.length,
+                      'show-popover': activeDayKey === dayKey(component, day),
+                    },
+                  ]"
+                  :aria-label="dayAriaLabel(component, day)"
+                  :title="dayTitle(component, day)"
+                  :tabindex="day.incidents?.length ? 0 : -1"
+                  @focus="activeDayKey = dayKey(component, day)"
+                  @blur="activeDayKey = ''"
+                  @mouseover="activeDayKey = dayKey(component, day)"
+                  @mouseout="activeDayKey = ''"
+                  @click="handleDayClick(day)"
+                >
+                  <span class="day-popover" role="tooltip">
+                    <strong>{{ formatDay(day.date) }}</strong>
+                    <span>{{ day.statusLabel }}</span>
+                    <em>{{ dayIncidentSummary(day) }}</em>
+                  </span>
+                </button>
+              </div>
+            </article>
+          </div>
+
+        </section>
+
+        <section v-if="activeIncidents.length" class="active-incidents">
+          <h2>Active incidents</h2>
+          <a
+            v-for="incident in activeIncidents"
             :id="`incident-${incident.id}`"
             :key="incident.id"
-            class="incident-card"
+            class="incident-card incident-link active"
+            :href="incidentPath(incident.id)"
+            @click.prevent="openIncident(incident.id)"
           >
             <div class="incident-meta">
               <span>{{ incident.status }}</span>
-              <time>{{ formatDate(incident.resolved_at || incident.started_at) }}</time>
+              <time>{{ formatDate(incident.started_at) }}</time>
             </div>
             <h3>{{ incident.title }}</h3>
             <p>{{ incident.summary }}</p>
-          </article>
-        </div>
-      </section>
+          </a>
+        </section>
+
+        <section v-if="recentResolved.length" class="past-incidents">
+          <h2>Previous incidents</h2>
+          <div class="incident-list">
+            <a
+              v-for="incident in recentResolved"
+              :id="`incident-${incident.id}`"
+              :key="incident.id"
+              class="incident-card incident-link"
+              :href="incidentPath(incident.id)"
+              @click.prevent="openIncident(incident.id)"
+            >
+              <div class="incident-meta">
+                <span>{{ incident.status }}</span>
+                <time>{{ formatDate(incident.resolved_at || incident.started_at) }}</time>
+              </div>
+              <h3>{{ incident.title }}</h3>
+              <p>{{ incident.summary }}</p>
+            </a>
+          </div>
+        </section>
+      </template>
 
       <footer class="page-footer">
         Powered by
