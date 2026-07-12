@@ -261,6 +261,13 @@ function statusMessage(value) {
           </article>
         </div>
       </section>
+
+      <footer class="page-footer">
+        Powered by
+        <a href="https://github.com/staatusHQ/staatus" target="_blank" rel="noreferrer">
+          Staatus
+        </a>
+      </footer>
     </section>
 
     <section v-else-if="loading" class="loading-state">
