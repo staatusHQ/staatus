@@ -138,13 +138,6 @@ function statusGlyph(value) {
   if (value === 'maintenance') return 'i'
   return '!'
 }
-
-function statusMessage(value) {
-  if (value === 'operational') return 'No active issues are affecting monitored services.'
-  if (value === 'maintenance') return 'Scheduled maintenance is currently in progress.'
-  if (activeIncidents.value.length > 0) return 'We are tracking active incidents affecting one or more services.'
-  return 'One or more monitored services need attention.'
-}
 </script>
 
 <template>
@@ -163,8 +156,6 @@ function statusMessage(value) {
       <section class="status-summary" :class="`tone-${statusTone}`">
         <span class="status-icon" aria-hidden="true">{{ statusGlyph(status.overall.status) }}</span>
         <h2>{{ status.overall.label }}</h2>
-        <p>{{ statusMessage(status.overall.status) }}</p>
-        <span>Last updated {{ formatDate(status.lastUpdated) }}</span>
       </section>
 
       <section class="timeline-panel">
