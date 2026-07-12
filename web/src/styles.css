@@ -121,18 +121,29 @@ h1 {
 }
 
 .status-summary {
-  display: grid;
-  justify-items: center;
-  gap: 14px;
-  margin: 42px 0 34px;
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: center;
+  margin: 38px 0 22px;
+  padding: 18px 20px;
+  border: 1px solid var(--tone);
+  border-radius: 8px;
+  background: var(--tone-soft);
+}
+
+.status-summary-main {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
 }
 
 .status-summary h2 {
   margin-bottom: 0;
   color: #171a20;
-  font-size: clamp(1.8rem, 4vw, 2.65rem);
-  line-height: 1.05;
+  font-size: clamp(1.12rem, 2vw, 1.35rem);
+  line-height: 1.15;
 }
 
 .status-icon,
@@ -147,9 +158,16 @@ h1 {
 }
 
 .status-icon {
-  width: 30px;
-  height: 30px;
-  box-shadow: 0 0 0 6px var(--tone-soft);
+  width: 28px;
+  height: 28px;
+  flex: 0 0 auto;
+}
+
+.status-updated {
+  color: #687283;
+  font-size: 0.9rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .status-icon:empty::before,
@@ -661,6 +679,12 @@ h1 {
     align-items: flex-start;
   }
 
+  .status-summary {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .section-heading {
     grid-template-columns: 1fr;
   }
@@ -722,6 +746,7 @@ h1 {
   }
 
   .status-summary {
-    margin: 34px 0 28px;
+    margin: 30px 0 18px;
+    padding: 16px;
   }
 }

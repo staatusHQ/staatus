@@ -159,6 +159,11 @@ function statusGlyph(value) {
   return '!'
 }
 
+function statusBarLabel(overall) {
+  if (overall?.status === 'operational') return 'All systems operational'
+  return overall?.label ?? 'Status unavailable'
+}
+
 function syncRoute() {
   const match = window.location.hash.match(/^#incident\/([^/]+)$/)
   selectedIncidentID.value = match ? decodeURIComponent(match[1]) : ''
@@ -298,8 +303,11 @@ function incidentTone(impact) {
 
       <template v-else>
         <section class="status-summary" :class="`tone-${statusTone}`">
-          <span class="status-icon" aria-hidden="true">{{ statusGlyph(status.overall.status) }}</span>
-          <h2>{{ status.overall.label }}</h2>
+          <div class="status-summary-main">
+            <span class="status-icon" aria-hidden="true">{{ statusGlyph(status.overall.status) }}</span>
+            <h2>{{ statusBarLabel(status.overall) }}</h2>
+          </div>
+          <time class="status-updated">{{ formatDate(status.lastUpdated) }}</time>
         </section>
 
         <section class="timeline-panel">
