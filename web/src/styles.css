@@ -189,8 +189,7 @@ h1 {
 
 .section-heading span,
 .incident-meta,
-.timeline-label span,
-.timeline-footer {
+.timeline-label span {
   color: #687283;
   font-size: 0.82rem;
 }
@@ -344,35 +343,6 @@ h1 {
   display: block;
 }
 
-.timeline-footer {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: 18px;
-  align-items: center;
-  padding: 12px 20px 14px;
-  border-top: 1px solid #edf0f4;
-}
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  justify-content: center;
-}
-
-.legend span {
-  display: inline-flex;
-  gap: 6px;
-  align-items: center;
-}
-
-.legend i {
-  width: 9px;
-  height: 9px;
-  border-radius: 2px;
-  background: var(--tone);
-}
-
 .active-incidents {
   display: grid;
   gap: 12px;
@@ -457,8 +427,7 @@ h1 {
     align-items: flex-start;
   }
 
-  .section-heading,
-  .timeline-footer {
+  .section-heading {
     grid-template-columns: 1fr;
   }
 
@@ -472,17 +441,9 @@ h1 {
     flex-wrap: wrap;
   }
 
-  .timeline-footer {
-    gap: 10px;
-  }
-
   .day-strip {
     grid-template-columns: repeat(90, minmax(2px, 1fr));
     gap: 1px;
-  }
-
-  .legend {
-    justify-content: flex-start;
   }
 }
 

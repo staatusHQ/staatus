@@ -224,16 +224,6 @@ function statusMessage(value) {
           </article>
         </div>
 
-        <div class="timeline-footer">
-          <span>{{ formatDay(timelineComponents[0]?.timeline?.[0]?.date) }}</span>
-          <div class="legend">
-            <span><i class="tone-ok"></i> Operational</span>
-            <span><i class="tone-warn"></i> Degraded</span>
-            <span><i class="tone-bad"></i> Outage</span>
-            <span><i class="tone-neutral"></i> No data</span>
-          </div>
-          <span>Today</span>
-        </div>
       </section>
 
       <section v-if="activeIncidents.length" class="active-incidents">
