@@ -289,10 +289,6 @@ function incidentTone(impact) {
 
           <section class="affected-components-panel">
             <h2>Affected components</h2>
-            <div class="incident-time-range">
-              <time>{{ formatDate(selectedIncident.started_at) }}</time>
-              <time>{{ selectedIncident.resolved_at ? formatDate(selectedIncident.resolved_at) : 'Now' }}</time>
-            </div>
             <div class="affected-component-list">
               <article
                 v-for="component in incidentComponents(selectedIncident.components)"
@@ -306,11 +302,10 @@ function incidentTone(impact) {
                   >
                     !
                   </span>
-                  <strong>{{ component.name }}</strong>
-                  <span>{{ impactLabel(selectedIncident.impact) }}</span>
-                </div>
-                <div class="component-incident-bar" :class="`tone-${incidentTone(selectedIncident.impact)}`">
-                  <span></span>
+                  <div>
+                    <strong>{{ component.name }}</strong>
+                    <span>{{ impactLabel(selectedIncident.impact) }}</span>
+                  </div>
                 </div>
               </article>
             </div>

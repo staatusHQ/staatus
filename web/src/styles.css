@@ -613,38 +613,37 @@ h1 {
   font-size: 1.25rem;
 }
 
-.incident-time-range {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  padding: 14px 24px;
-  border-bottom: 1px solid #f1f3f6;
-  color: #8a92a1;
-  font-size: 0.86rem;
-}
-
 .affected-component-list {
   display: grid;
-  gap: 18px;
+  gap: 12px;
   padding: 22px 24px;
 }
 
 .affected-component {
-  display: grid;
-  gap: 13px;
+  padding: 15px;
+  border: 1px solid #edf0f4;
+  border-radius: 8px;
+  background: #fbfcfe;
 }
 
 .affected-component-title {
   display: flex;
-  gap: 9px;
+  gap: 11px;
   align-items: center;
   color: #8a92a1;
 }
 
 .affected-component-title strong {
+  display: block;
+  margin-bottom: 2px;
   color: #20242c;
   font-size: 0.98rem;
   font-weight: 800;
+}
+
+.affected-component-title span:last-child {
+  display: block;
+  font-size: 0.9rem;
 }
 
 .component-alert-dot {
@@ -658,21 +657,6 @@ h1 {
   background: var(--tone);
   font-size: 0.75rem;
   font-weight: 900;
-}
-
-.component-incident-bar {
-  height: 22px;
-  overflow: hidden;
-  border-radius: 2px;
-  background: #24b98c;
-}
-
-.component-incident-bar span {
-  display: block;
-  width: 88%;
-  height: 100%;
-  margin-left: 12%;
-  background: var(--tone);
 }
 
 .incident-timeline {
@@ -817,16 +801,10 @@ h1 {
   .incident-share,
   .affected-components-panel > h2,
   .incident-updates-panel > h2,
-  .incident-time-range,
   .affected-component-list,
   .incident-timeline {
     padding-right: 18px;
     padding-left: 18px;
-  }
-
-  .incident-time-range {
-    flex-direction: column;
-    gap: 6px;
   }
 
   .incident-share {
